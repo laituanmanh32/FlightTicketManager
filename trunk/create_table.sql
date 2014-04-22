@@ -36,7 +36,8 @@ ThongTinKSinh      VARCHAR(50) NOT NULL,
 --hello--
 create table TrangThaiTG
 (
-MSTTTG    int       NOT NULL     AUTO_INCREMENT
+MSTTTG    int       NOT NULL     AUTO_INCREMENT,
+ID        int       NOT NULL
 )
 
 create table PhiVCHH
