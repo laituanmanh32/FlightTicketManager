@@ -33,7 +33,7 @@ constraint      check_MSKH check (regexp_like (MSKH, '[TE][0-9]{10}')),
 MSNGH       VARCHAR(10)       NOT NULL,
 ThongTinKSinh      VARCHAR(50) NOT NULL,
 )
-
+--hello--
 create table TrangThaiTG
 (
 MSTTTG    int       NOT NULL     AUTO_INCREMENT
