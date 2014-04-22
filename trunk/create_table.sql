@@ -1,13 +1,13 @@
 
-------------1. Bang Khach Hang---------------------
+------------1. Bang Khach Hang --> OK ---------------------
 create table KhachHang
 (MSKH           char(12)        NOT NULL     PRIMARY KEY,
-constraint      check_MSKH check (regexp_like (MSKH, '[NL|TE][0-9]{10}')),
+constraint      check_MSKH check (regexp_like (MSKH, '^(NL|TE|)[0-9]{10}')),
 HoTen           VARCHAR2(25)    NOT NULL,
 NgaySinh        date            NOT NULL,
-GioiTinh        VARCHAR(3)      NOT NULL check (regexp_like(GioiTinh,'[Nam|Nu]')), 
+GioiTinh        VARCHAR(3)      NOT NULL check (regexp_like(GioiTinh,'(Nam|Nu)')), 
 QuocTich        VARCHAR(15)     NOT NULL,
-SoDT            number     NOT NULL check (regexp_like (SoDT,'[+84([0-9]){9}[0-9|]')),
+SoDT            varchar(13)     NOT NULL check (regexp_like (SoDT,'^(\+84)[0-9]{9}[0-9|]?')),
 DiaChi          VARCHAR(50)     NOT NULL,
 MSTTTG          VARCHAR(10)     NOT NULL,
 MSPHH           VARCHAR(10)     NOT NULL,
@@ -15,29 +15,29 @@ MSCB            VARCHAR(10)     NOT NULL,
 KhoiLuongVuot   number           NOT NULL
 );
 
--------------2. Bang KhachHangNL-------------
+-------------2. Bang KhachHangNL -> Foreign Key-------------
 create table KhachHangNL
 (
 MSKH           	char(12)        NOT NULL     PRIMARY KEY,
-constraint      check_MSKH check (regexp_like (MSKH, '[NL][0-9]{10}')),
+constraint      check_MSKH,
 CMND         	number      NOT NULL UNIQUE,
 Passport     	VARCHAR     NOT NULL,
-constraint      check_Passport check(regexp_like(Passport,'[B[0-9]{7}]'))
+constraint      check_Passport check(regexp_like(Passport,'^B[0-9]{7}$'))
 );
 
--------------3. KhachHangTE-----------------
+-------------3. KhachHangTE -> Foreign Key-----------------
 create table KhachHangTE
 (
-MSKH           	char(12)        NOT NULL     PRIMARY KEY,
-constraint      check_MSKH check (regexp_like (MSKH, '[TE][0-9]{10}')),
-MSNGH       	VARCHAR(10)       NOT NULL,
-ThongTinKSinh   VARCHAR(50) NOT NULL,
+MSKH           	char(12)         	NOT NULL     PRIMARY KEY,
+constraint      check_MSKH,
+MSNGH       	VARCHAR(10)      	NOT NULL,
+ThongTinKSinh   VARCHAR(50) 		NOT NULL,
 );
 ------------4. Trangthai TG------------------
 create table TrangThaiTG
 (
 MSTTTG    		int NULL,
-TenTT 	  		varchar(2) NOT NULL	 check(regexp_like(TenTT,'[TG|HH|DD]')),
+TenTT 	  		varchar(2) NOT NULL	 check(regexp_like(TenTT,'(TG|HH|DD)')),
 PhanTramTP		float	  NOT NULL,
 primary key(MSTTTG)
 );
@@ -80,8 +80,7 @@ MSTB        varchar(10)         not null,
 ---------------7. Ghe Khach-------------------
 create table GheKhach
 (
-MSKH           	char(12)        NOT NULL     PRIMARY KEY,
-constraint      check_MSKH check (regexp_like (MSKH, '[NL|TE][0-9]{10}')),
+MSKH           	char(12)			,
 GheSo       	int         NOT NULL,
 Gia         	number      NOT NULL,
 CONSTRAINT 		PR_KEY_GheKhach Primary key (MSKH,Gheso) ENABLE
@@ -145,18 +144,18 @@ constraint 	PR_key_ChuyenBayThucPham primary key (MSTB,MSTP)     enable
 create table NhanVien
 (
 MSNV        varchar(20)          not null        primary key,
-constraint  check_NhanVien check (regexp_like (MSNV, '[PC|TV|KT|DH|KS][0-9]{10}')),
+constraint  check_NhanVien check (regexp_like (MSNV, '^(PC|TV|KT|DH|KS][0-9){10}')),
 HoTen       varchar(20)          not null,
 NgaySinh    date              not null,
 GioiTinh    varchar(3)           not null      check(GioiTinh in ('NAM','NU')),
 QuocTich    varchar(20)          not null,
 CMND        varchar(15)          not null       unique,
 Passport    varchar(8),
-constraint      check_Passport check(regexp_like(Passport,'[B[0-9]{7}]')),
+constraint      check_Passport check(regexp_like(Passport,'^B[0-9]{7}$')),
 NgayVaoLam  date              not null,
-DiaChi      varchar(50)          not null, 
-SoDT        varchar(15)          not null        check (regexp_like (SoDT,'[+84([0-9]){9}[0-9|]')),
-TienLuong   number(15)        not null,
+DiaChi      char(50)          not null, 
+SoDT        char(15)          not null        check (regexp_like (SoDT,'^(\+84)[0-9]{9}[0-9|]?')),
+TienLuong   number(15)        not null
 );
 
 
