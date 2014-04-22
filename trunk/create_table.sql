@@ -67,7 +67,14 @@ ThoiDiemApDung 	date       	 NOT NULL,
 ----------------6. Chuyen Bay----------------
 create table ChuyenBay
 (
-
+MSCB        varchar(9)          not null      primary key,
+constraint check_Chuyenbay      check (regexp_like(MSCB,'SA[0-9]{7}')),
+TrangThai   varchar(2)          not null      check(TrangThai in ('CB','DB','HB')),
+SoGheTrong  int                 not null,
+ThoiDiemDi  date time           not null,
+ThoiDiemDen date time           not null,
+MSMB        varchar(10)         not null,
+MSTB        varchar(10)         not null,
 )
 
 ---------------7. Ghe Khach-------------------
@@ -118,8 +125,8 @@ create table Ga
 create table ThucPham
 (
 MSTP        char(10)        not null        primary key,
-Ten         char(20)        not null,
-MoTa        char(50)        not null,
+Ten         char(20)        not null       ,
+MoTa        char(50)        not null       ,
 );
 
 create table GiaThucPham
@@ -137,51 +144,57 @@ constraint 	PR_key_ChuyenBayThucPham primary key (MSTB,MSTP)     enable
 -------------------16. Nhan vien ------------------
 create table NhanVien
 (
-MSNV        char(20)          not null        primary key,
+MSNV        varchar(20)          not null        primary key,
 constraint  check_NhanVien check (regexp_like (MSNV, '[PC|TV|KT|DH|KS][0-9]{10}')),
-HoTen       char(20)          not null,
+HoTen       varchar(20)          not null,
 NgaySinh    date              not null,
-GioiTinh    char(3)           not null      check(GioiTinh in ('NAM','NU')),
-QuocTich    char(20)          not null,
-CMND        char(15)          not null       unique,
-Passport    char(8),
+GioiTinh    varchar(3)           not null      check(GioiTinh in ('NAM','NU')),
+QuocTich    varchar(20)          not null,
+CMND        varchar(15)          not null       unique,
+Passport    varchar(8),
 constraint      check_Passport check(regexp_like(Passport,'[B[0-9]{7}]')),
 NgayVaoLam  date              not null,
-DiaChi      char(50)          not null, 
-SoDT        char(15)          not null        check (regexp_like (SoDT,'[+84([0-9]){9}[0-9|]')),
-TienLuong   number(15)        not null
+DiaChi      varchar(50)          not null, 
+SoDT        varchar(15)          not null        check (regexp_like (SoDT,'[+84([0-9]){9}[0-9|]')),
+TienLuong   number(15)        not null,
 );
 
 
 -------------------17. Bang cap---------------------
 create table BangCap
 (
-MSBC        char(10)        not null,
-TenBangCap         char(20)    not null,
-TruongDaoTao       char(20)    not null,
-NamDat             char(20)    not null,
-MSNV
-)
+MSBC               varchar(10)        not null         primary key,
+TenBangCap         varchar(20)        not null,
+TruongDaoTao       varchar(20)        not null,
+NamDat             varchar(20)        not null,
+MSNV               varchar(20)        not null,
+);
 
 create table PhiCong
 (
-)
+MSNV                varchar(20) reference NhanVien(MSNV)      foreign key ,
+LoaiPhiCong         varchar(2)  not null  check(LoaiPhiCong in('CT','PL')),
+);
 
 create table TiepVien
 (
+MSNV                varchar (20) reference NhanVien(MSNV)      foreign key,
+NgoaiNguThongThao   varchar(15)  not null,
 )
 
 create table CaLamViec
-(
-)
+(MSCLV      varchar(2)      not null      primary key,
+constraint      check_CaLamViec check (regexp_like (MSCLV, '[C][1-3]')),
+TuGio          time         not null,
+DenGio         time         not null,
+);
 
 create table NhanVienMD
 (
-)
-
-create table NhanVienMD
-(
-)
+MSNV                varchar (20) reference NhanVien(MSNV)      foreign key,
+MSCN                varchar (20)          not null,
+MSNV_Truong         varchar (20)          not null,
+);
 
 create table NVMatDat_CaLV
 (
