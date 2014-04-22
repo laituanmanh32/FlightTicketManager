@@ -15,62 +15,76 @@ MSCB            VARCHAR(10)     NOT NULL,
 KhoiLuongVuot   number           NOT NULL
 );
 
--------------Bang KhachHangNL-------------
+-------------2. Bang KhachHangNL-------------
 create table KhachHangNL
 (
-MSKH           char(12)        NOT NULL     PRIMARY KEY,
+MSKH           	char(12)        NOT NULL     PRIMARY KEY,
 constraint      check_MSKH check (regexp_like (MSKH, '[NL][0-9]{10}')),
-CMND         number      NOT NULL UNIQUE,
-Passport     VARCHAR     NOT NULL,
+CMND         	number      NOT NULL UNIQUE,
+Passport     	VARCHAR     NOT NULL,
 constraint      check_Passport check(regexp_like(Passport,'[B[0-9]{7}]'))
 );
 
---3. KhachHangTE
+-------------3. KhachHangTE-----------------
 create table KhachHangTE
 (
-MSKH           char(12)        NOT NULL     PRIMARY KEY,
+MSKH           	char(12)        NOT NULL     PRIMARY KEY,
 constraint      check_MSKH check (regexp_like (MSKH, '[TE][0-9]{10}')),
-MSNGH       VARCHAR(10)       NOT NULL,
-ThongTinKSinh      VARCHAR(50) NOT NULL,
+MSNGH       	VARCHAR(10)       NOT NULL,
+ThongTinKSinh   VARCHAR(50) NOT NULL,
 );
---4. Trangthai TG--
+------------4. Trangthai TG------------------
 create table TrangThaiTG
 (
-MSTTTG    int       NOT NULL     AUTO_INCREMENT,
-ID        int       NOT NULL
+MSTTTG    		int NULL,
+TenTT 	  		varchar(2) NOT NULL	 check(regexp_like(TenTT,'[TG|HH|DD]')),
+PhanTramTP		float	  NOT NULL,
+primary key(MSTTTG)
 );
 
------------5. Phi VCHH------------
+create sequence TrangThai_seq;
+
+CREATE OR REPLACE TRIGGER dept_bir 
+BEFORE INSERT ON TrangThaiTG 
+FOR EACH ROW
+
+BEGIN
+  SELECT TrangThai_seq.nextval
+  INTO   :new.MSTTTG
+  FROM   dual;
+END;
+
+---------------5. Phi VCHH-------------------
 create table PhiVCHH
 (
-MSPHH         int          NOT NULL       AUTO_INCREMENT,
-LoaiVe        CHAR(3)      NOT NULL       check(LoaiVe IN ('VIP','PT')), 
-TrongLuongDM  number       NOT NULL,
-DonGia_Kg     number       NOT NULL,
-ThoiDiemApDung date        NOT NULL,
+MSPHH         	int          NOT NULL       AUTO_INCREMENT,
+LoaiVe        	CHAR(3)      NOT NULL       check(LoaiVe IN ('VIP','PT')), 
+TrongLuongDM  	number       NOT NULL,
+DonGia_Kg     	number       NOT NULL,
+ThoiDiemApDung 	date       	 NOT NULL,
 );
 
--------------6. Chuyen Bay--------------
+----------------6. Chuyen Bay----------------
 create table ChuyenBay
 (
 
 )
 
----------------7. Ghe Khach
+---------------7. Ghe Khach-------------------
 create table GheKhach
 (
-MSKH           char(12)        NOT NULL     PRIMARY KEY,
+MSKH           	char(12)        NOT NULL     PRIMARY KEY,
 constraint      check_MSKH check (regexp_like (MSKH, '[NL|TE][0-9]{10}')),
-GheSo       int         NOT NULL,
-Gia         number      NOT NULL,
-CONSTRAINT PR_KEY_GheKhach Primary key (MSKH,Gheso) ENABLE
+GheSo       	int         NOT NULL,
+Gia         	number      NOT NULL,
+CONSTRAINT 		PR_KEY_GheKhach Primary key (MSKH,Gheso) ENABLE
 );
 
 create table MayBay
 (
 )
 
------------------9. Loai May bay
+-----------------9. Loai May bay--------------
 create table LoaiMayBay
 (
 MSLMB       int       Auto_increment        NOT NULL        primary key,
@@ -81,12 +95,13 @@ SoGhePT     int                             not null,
 TongSoGhe   int                             not null,
 );
 
+-----------------10. Ghe Ngoi----------------
 create table GheNgoi
 (
 )
 
 
--------------------11. Tuyen bay
+-------------------11. Tuyen bay-------------
 create table TuyenBay
 (
 MSTB          int          auto_increment         not null          primary key,
@@ -103,42 +118,42 @@ create table Ga
 create table ThucPham
 (
 MSTP        char(10)        not null        primary key,
-Ten         char(20)        not null        primary key,
-MoTa        char(50)        not null        primary key,
+Ten         char(20)        not null,
+MoTa        char(50)        not null,
 );
 
 create table GiaThucPham
 (
 )
 
--------------------15.chuyen bay thuc pham
+-------------------15.chuyen bay thuc pham--------
 create table ChuyenBayThucPham
 (
 MSTB          int          auto_increment         not null,
-MSTP        char(10)        not null,
-constraint PR_key_ChuyenBayThucPham primary key (MSTB,MSTP)     enable
+MSTP          char(10)        not null,
+constraint 	PR_key_ChuyenBayThucPham primary key (MSTB,MSTP)     enable
 );
 
-
+-------------------16. Nhan vien ------------------
 create table NhanVien
 (
 MSNV        char(20)          not null        primary key,
-constraint      check_NhanVien check (regexp_like (MSNV, '[PC|TV|KT|DH|KS][0-9]{10}')),
+constraint  check_NhanVien check (regexp_like (MSNV, '[PC|TV|KT|DH|KS][0-9]{10}')),
 HoTen       char(20)          not null,
 NgaySinh    date              not null,
 GioiTinh    char(3)           not null      check(GioiTinh in ('NAM','NU')),
 QuocTich    char(20)          not null,
 CMND        char(15)          not null       unique,
 Passport    char(8),
-constraint      check_Passport check(regexp_like(Passport,'[B[0-9]{7}]'))
+constraint      check_Passport check(regexp_like(Passport,'[B[0-9]{7}]')),
 NgayVaoLam  date              not null,
 DiaChi      char(50)          not null, 
 SoDT        char(15)          not null        check (regexp_like (SoDT,'[+84([0-9]){9}[0-9|]')),
-TienLuong   number(15)        not null,
-)
+TienLuong   number(15)        not null
+);
 
 
--------------------17. Bang cap
+-------------------17. Bang cap---------------------
 create table BangCap
 (
 MSBC        char(10)        not null,
