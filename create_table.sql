@@ -1,25 +1,71 @@
-
 ------------1. Bang Khach Hang---------------------
 create table KhachHang
 (MSKH           char(12)        NOT NULL     PRIMARY KEY,
 constraint      check_MSKH check (regexp_like (MSKH, '^(NL|TE)[0-9]{10}$')),
 HoTen           VARCHAR2(25)    NOT NULL,
 NgaySinh        date            NOT NULL,
-GioiTinh        VARCHAR(3)      NOT NULL check (regexp_like(GioiTinh,'(Nam|Nu)')), 
+GioiTinh        VARCHAR(3)      NOT NULL,
+constraint      check_GioiTinh check (regexp_like(GioiTinh,'(Nam|Nu)')), 
 QuocTich        VARCHAR(15)     NOT NULL,
 SoDT            number     NOT NULL check (regexp_like (SoDT,'^(+84)[0-9]{9}[0-9|]?$')),
 DiaChi          VARCHAR(50)     NOT NULL,
-MSTTTG          VARCHAR(10)     NOT NULL,
-MSPHH           VARCHAR(10)     NOT NULL,
-MSCB            VARCHAR(10)     NOT NULL,
-KhoiLuongVuot   number           NOT NULL
+MSTTTG          VARCHAR(10)     NOT NULL, /*Foreign key*/
+MSPHH           VARCHAR(10)     NOT NULL, /*Foreign key*/
+MSCB            VARCHAR(10)     NOT NULL, /*Foreign key*/
+KhoiLuongVuot   number          NOT NULL
 );
+------------ Generate auto increase ID ---------------
+CREATE or REPLACE FUNCTION ID_GEN(seed in number, precious in number)
+RETURN VARCHAR2 IS
+loop_index  number(2);
+loop_limit      number(2);
+temp		varchar(100);
+BEGIN
+	temp := to_char(seed);
+  loop_limit := precious - length(temp);
+	<<gen_loop>>
+	for loop_index in 1..loop_limit loop
+		temp := '0'||temp;
+	end loop gen_loop;
+	RETURN temp;
+END ID_GEN;
+/
+------------ Calculator age from birthday -------------
+CREATE or REPLACE FUNCTION GET_AGE(birthdate in date)
+RETURN number IS
+AGE number(10);
+BEGIN
+  AGE := extract(year from current_date) - extract(year from birthdate);
+  RETURN AGE;
+END GET_AGE;
+/
+------------ Sequence for ID increment ----------------
+CREATE sequence KhachHang_MSKH_NL_sq;
+CREATE sequence KhachHang_MSKH_TE_sq;
+
+------------ Trigger to handler everything in KhachHangTable --------
+CREATE or REPLACE TRIGGER KhachHang_Handler_trg
+BEFORE INSERT on KhachHang
+FOR EACH ROW
+BEGIN
+  IF (get_age(:new.NgaySinh) >= 18) THEN
+    SELECT 'NL'||ID_GEN(KhachHang_MSKH_NL_sq.nextval,10)
+    INTO	:new.MSKH
+    FROM	dual;
+  ELSE
+    SELECT 'TE'||ID_GEN(KhachHang_MSKH_TE_sq.nextval,10)
+    INTO	:new.MSKH
+    FROM	dual;
+  END IF;
+END;
+/
+
+----------------------------Done!----------------------------------------
 
 -------------2. Bang KhachHangNL-------------
 create table KhachHangNL
 (
-MSKH           	char(12)        NOT NULL     PRIMARY KEY,
-constraint      check_MSKH check (regexp_like (MSKH, '(NL)[0-9]{10}')),
+MSKH           	char(12)    NOT NULL     /*Foreign key*/,
 CMND         	number      NOT NULL UNIQUE,
 Passport     	VARCHAR     NOT NULL,
 constraint      check_Passport check(regexp_like(Passport,'^[A-Z][0-9]{7}$'))
@@ -28,17 +74,17 @@ constraint      check_Passport check(regexp_like(Passport,'^[A-Z][0-9]{7}$'))
 -------------3. KhachHangTE-----------------
 create table KhachHangTE
 (
-MSKH           	char(12)        NOT NULL     PRIMARY KEY,
+MSKH           	char(12)    NOT NULL     /*Foreign key*/,
 constraint      check_MSKH check (regexp_like (MSKH, '^(TE)[0-9]{10}$')),
-MSNGH       	VARCHAR(10)       NOT NULL,
+MSNGH       	VARCHAR(10)	NOT NULL,
 ThongTinKSinh   VARCHAR(50) NOT NULL,
 );
 ------------4. Trangthai TG------------------
 create table TrangThaiTG
 (
-MSTTTG    		int NULL,
-TenTT 	  		varchar(2) NOT NULL	 check(regexp_like(TenTT,'(TG|HH|DD)')),
-PhanTramTP		float	  NOT NULL,
+MSTTTG    		int 		NOT NULL /* Auto increment */,
+TenTT 	  		varchar(2) 	NOT NULL	 check(regexp_like(TenTT,'(TG|HH|DD)')),
+PhanTramTP		float	  	NOT NULL,
 primary key(MSTTTG)
 );
 
