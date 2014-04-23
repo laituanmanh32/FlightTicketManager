@@ -2,12 +2,12 @@
 ------------1. Bang Khach Hang---------------------
 create table KhachHang
 (MSKH           char(12)        NOT NULL     PRIMARY KEY,
-constraint      check_MSKH check (regexp_like (MSKH, '[NL|TE][0-9]{10}')),
+constraint      check_MSKH check (regexp_like (MSKH, '^(NL|TE)[0-9]{10}$')),
 HoTen           VARCHAR2(25)    NOT NULL,
 NgaySinh        date            NOT NULL,
-GioiTinh        VARCHAR(3)      NOT NULL check (regexp_like(GioiTinh,'[Nam|Nu]')), 
+GioiTinh        VARCHAR(3)      NOT NULL check (regexp_like(GioiTinh,'(Nam|Nu)')), 
 QuocTich        VARCHAR(15)     NOT NULL,
-SoDT            number     NOT NULL check (regexp_like (SoDT,'[+84([0-9]){9}[0-9|]')),
+SoDT            number     NOT NULL check (regexp_like (SoDT,'^(+84)[0-9]{9}[0-9|]?$')),
 DiaChi          VARCHAR(50)     NOT NULL,
 MSTTTG          VARCHAR(10)     NOT NULL,
 MSPHH           VARCHAR(10)     NOT NULL,
@@ -19,17 +19,17 @@ KhoiLuongVuot   number           NOT NULL
 create table KhachHangNL
 (
 MSKH           	char(12)        NOT NULL     PRIMARY KEY,
-constraint      check_MSKH check (regexp_like (MSKH, '[NL][0-9]{10}')),
+constraint      check_MSKH check (regexp_like (MSKH, '(NL)[0-9]{10}')),
 CMND         	number      NOT NULL UNIQUE,
 Passport     	VARCHAR     NOT NULL,
-constraint      check_Passport check(regexp_like(Passport,'[B[0-9]{7}]'))
+constraint      check_Passport check(regexp_like(Passport,'^[A-Z][0-9]{7}$'))
 );
 
 -------------3. KhachHangTE-----------------
 create table KhachHangTE
 (
 MSKH           	char(12)        NOT NULL     PRIMARY KEY,
-constraint      check_MSKH check (regexp_like (MSKH, '[TE][0-9]{10}')),
+constraint      check_MSKH check (regexp_like (MSKH, '^(TE)[0-9]{10}$')),
 MSNGH       	VARCHAR(10)       NOT NULL,
 ThongTinKSinh   VARCHAR(50) NOT NULL,
 );
@@ -37,7 +37,7 @@ ThongTinKSinh   VARCHAR(50) NOT NULL,
 create table TrangThaiTG
 (
 MSTTTG    		int NULL,
-TenTT 	  		varchar(2) NOT NULL	 check(regexp_like(TenTT,'[TG|HH|DD]')),
+TenTT 	  		varchar(2) NOT NULL	 check(regexp_like(TenTT,'(TG|HH|DD)')),
 PhanTramTP		float	  NOT NULL,
 primary key(MSTTTG)
 );
