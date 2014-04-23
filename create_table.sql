@@ -1,13 +1,18 @@
+/*		Pre-setting			*/
+alter session set NLS_DATE_FORMAT='<dd/mm/yyyy>';
+/***********************************************/
+
+
 ------------1. Bang Khach Hang---------------------
 create table KhachHang
-(MSKH           char(12)        NOT NULL     PRIMARY KEY,
+(MSKH           varchar(12)        NOT NULL     PRIMARY KEY,
 constraint      check_MSKH check (regexp_like (MSKH, '^(NL|TE)[0-9]{10}$')),
-HoTen           VARCHAR2(25)    NOT NULL,
+HoTen           VARCHAR(25)    NOT NULL,
 NgaySinh        date            NOT NULL,
 GioiTinh        VARCHAR(3)      NOT NULL,
 constraint      check_GioiTinh check (regexp_like(GioiTinh,'(Nam|Nu)')), 
 QuocTich        VARCHAR(15)     NOT NULL,
-SoDT            number     NOT NULL check (regexp_like (SoDT,'^(+84)[0-9]{9}[0-9|]?$')),
+SoDT            number     		NOT NULL check (regexp_like (SoDT,'^(+84)[0-9]{9}[0-9|]?$')),
 DiaChi          VARCHAR(50)     NOT NULL,
 MSTTTG          VARCHAR(10)     NOT NULL, /*Foreign key*/
 MSPHH           VARCHAR(10)     NOT NULL, /*Foreign key*/
@@ -65,20 +70,22 @@ END;
 -------------2. Bang KhachHangNL-------------
 create table KhachHangNL
 (
-MSKH           	char(12)    NOT NULL,		/*Foreign key reference to KhachHang*/
-CMND         	number      NOT NULL UNIQUE,
-Passport     	VARCHAR     NOT NULL,
-constraint      check_Passport check(regexp_like(Passport,'^[A-Z][0-9]{7}$'))
+MSKH           	varchar(12)    	NOT NULL PRIMARY KEY, /* Foreign Key reference to Khach Hang*/
+CMND         	number      	NOT NULL UNIQUE,
+Passport     	VARCHAR(8),
+constraint      check_Passport 	check(regexp_like(Passport,'^[A-Z][0-9]{7}$'))
 );
+/*DONE!*/
 
 -------------3. KhachHangTE-----------------
 create table KhachHangTE
 (
-MSKH           	char(12)    NOT NULL,		/*Foreign key reference to KhachHang*/
-constraint      check_MSKH 	check (regexp_like (MSKH, '^(TE)[0-9]{10}$')),
-MSNGH       	VARCHAR(10)	NOT NULL,
-ThongTinKSinh   VARCHAR(50) NOT NULL,
+MSKH           	varchar(12)    NOT NULL,		/*Foreign key reference to KhachHang*/
+constraint      MSKH_check 	check (regexp_like (MSKH, '^(TE)[0-9]{10}$')),
+MSNGH       	VARCHAR(12)	NOT NULL,
+ThongTinKSinh   VARCHAR(50)
 );
+/*DONE!*/
 ------------4. Trangthai TG------------------
 create table TrangThaiTG
 (
@@ -90,15 +97,15 @@ primary key(MSTTTG)
 
 create sequence TrangThai_seq;
 
-CREATE OR REPLACE TRIGGER dept_bir 
+CREATE OR REPLACE TRIGGER TrangThaiTG_In_trg 
 BEFORE INSERT ON TrangThaiTG 
 FOR EACH ROW
-
 BEGIN
   SELECT TrangThai_seq.nextval
   INTO   :new.MSTTTG
   FROM   dual;
 END;
+/
 /* DONE! */
 
 
@@ -110,65 +117,94 @@ LoaiVe        	VARCHAR(3)      NOT NULL       check(LoaiVe IN ('VIP','PT')),
 TrongLuongDM  	number       	NOT NULL,
 DonGia_Kg     	number       	NOT NULL,
 ThoiDiemApDung 	date       		NOT NULL,
-primary key(MSPHH),
+primary key(MSPHH)
 );
+
+create sequence PhiVCHH_seq;
+
+CREATE OR REPLACE TRIGGER PhiVCHH_In_trg 
+BEFORE INSERT ON PhiVCHH 
+FOR EACH ROW
+
+BEGIN
+  SELECT PhiVCHH_seq.nextval
+  INTO   :new.MSPHH
+  FROM   dual;
+END;
+/
+/*DONE!*/
 
 ----------------6. Chuyen Bay----------------
 create table ChuyenBay
 (
 MSCB        varchar(9)          not null,
-constraint check_Chuyenbay      check (regexp_like(MSCB,'SA[0-9]{7}')),
+constraint check_Chuyenbay      check (regexp_like(MSCB,'^(SA)[0-9]{7}')),
 TrangThai   varchar(2)          not null      check(TrangThai in ('CB','DB','HB')),
 SoGheTrong  int                 not null,
-ThoiDiemDi  date time           not null,
-ThoiDiemDen date time           not null,
+ThoiDiemDi  date           		not null,
+ThoiDiemDen date        		not null,
 MSMB        varchar(20)         not null,
 MSTB        varchar(20)         not null,
-primary key (MSCB),
+primary key (MSCB)
 );
+/*DONE!*/
 
 ---------------7. Ghe Khach-------------------
 create table GheKhach
 (
-MSKH           	char(12)        not null,
-GheSo       	int        		not null,
-Gia         	number      	not null,
-CONSTRAINT 		PR_KEY_GheKhach primary key (MSKH,Gheso) ENABLE
+MSKH           	varchar(12)        	not null,
+GheSo       	varchar(3)        	not null,
+Gia         	number      		not null,
+CONSTRAINT 		PR_KEY_GheKhach 	primary key (MSKH,Gheso) ENABLE
 );
+/*DONE!*/
 
----------------8. May bay--------------------
+-----------------8. Loai May bay--------------
+create table LoaiMayBay
+(
+MSLMB       varchar(20)               				not null,
+HangSX      char(20)                        not null,
+Model_      varchar(20)                            not null,
+SoGheVip    int                             not null,
+SoGhePT     int                             not null,
+TongSoGhe   int                             not null,
+primary key(MSLMB)
+);
+/*DONE!*/
+-----------------9. May bay--------------
 create table MayBay
 (
-MSMB        	varchar(20)       	not null,
-constraint      check_Maybay		check (regexp_like (MSMB, 'SAP[0-9]{3}')),
+MSMB        	varchar(6)       	not null,
+constraint      check_Maybay		check (regexp_like (MSMB, '^(SAP)[0-9]{3}')),
 TongGioBay      number        		not null,
 NamSX           int           		not null,
 ThoiDiemSD      date          		not null,
 MSLMB           varchar(20)   		not null,
-primary key		(MSMB),
+primary key		(MSMB)
 );
-
------------------9. Loai May bay--------------
-create table LoaiMayBay
-(
-MSLMB       int               				not null,
-HangSX      char(20)                        not null,
-Moden       char                            not null,
-SoGheVip    int                             not null,
-SoGhePT     int                             not null,
-TongSoGhe   int                             not null,
-primary key(MSLMB),
-);
-
+/*DONE!*/
 -----------------10. Ghe Ngoi----------------
 create table GheNgoi
 (
 MSG         int        	   not null ,
 Gheso       varchar(3)     not null           unique,
-constraint  check_GheNgoi  check(regexp_like(GheSo,'')), /*Thieu regexp*/
+constraint  check_GheNgoi  check(regexp_like(GheSo,'^[A-Z][0-9]{2}')),
 LoaiGhe     varchar(3)     not null           check(LoaiGhe in ('VIP','PT')),
-MSLMB       varchar(20)    not null, 
-)
+MSLMB       varchar(20)    not null
+);
+
+create sequence GheNgoi_seq;
+
+CREATE OR REPLACE TRIGGER GheNgoi_In_trg 
+BEFORE INSERT ON GheNgoi 
+FOR EACH ROW
+BEGIN
+  SELECT GheNgoi_seq.nextval
+  INTO   :new.MSG
+  FROM   dual;
+END;
+/
+/*DONE!*/
 
 
 -------------------11. Tuyen bay-------------
@@ -320,7 +356,7 @@ create table ChuyenMonBD
 MSNV        varchar(20)       not null,
 MSLMB       varchar(20)       not null,
 primary key (MSNV, MSLMB),
-)
+);
 
 /*		MAPPING FOREIGN KEY 	*/
 -- code here
@@ -330,26 +366,26 @@ ALTER TABLE KhachHang ADD CONSTRAINT KhachHang_MSPHH_FK  FOREIGN KEY (MSPHH)  RE
 ALTER TABLE KhachHang ADD CONSTRAINT KhachHang_MSCB_FK   FOREIGN KEY (MSCB)   REFERENCES ChuyenBay(MSCB);
 
 
---KhachHangNL ----> KhachHang
-ALTER TABLE KhachHangNL ADD CONSTRAINT KhachHangNL_FK FOREIGN KEY (MSKH) REFERENCES KhachHang(MSKH);
-
+--KhachHangNL ----> KhachHang,KhachHangNL
+ALTER TABLE KhachHangTE ADD CONSTRAINT KhachHangTE_MSKH_FK FOREIGN KEY (MSKH) REFERENCES KhachHang(MSKH);
+ALTER TABLE KhachHangTE ADD CONSTRAINT KhachHangTE_MSNGH_FK FOREIGN KEY (MSNGH) REFERENCES KhachHangNL(MSKH);
+/*CHECKED*/
 --KhachHangTE-----> KhachHang
 ALTER TABLE KhachHangTE ADD CONSTRAINT KhachHangTE_FK FOREIGN KEY (MSKH) REFERENCES KhachHang(MSKH);
-
+/*CHECKED*/
 --ChuyenBay--->MayBay,TuyenBay
 ALTER TABLE ChuyenBay ADD CONSTRAINT ChuyenBay_MSMB_FK FOREIGN KEY (MSMB) REFERENCES MayBay(MSMB);
 ALTER TABLE ChuyenBay ADD CONSTRAINT ChuyenBay_MSTB_FK FOREIGN KEY (MSTB) REFERENCES TuyenBay(MSTB);
 
 --GheKhach--->KhachHang
 ALTER TABLE GheKhach ADD CONSTRAINT GheKhach_MSKH_FK FOREIGN KEY (MSKH) REFERENCES KhachHang(MSKH);
-ALTER TABLE GheKhach ADD CONSTRAINT GheKhach_PK  PRIMARY KEY (MSKH,GheSo);	
-
+/*CHECKED*/
 --MayBay--->LoaiMayBay
 ALTER TABLE MayBay ADD CONSTRAINT MayBay_MSLMB_FK_FK FOREIGN KEY (MSLMB) REFERENCES LoaiMayBay(MSLMB);	
 
 --GheNgoi--->GheKhach,LoaiMayBay
-ALTER TABLE GheNgoi ADD CONSTRAINT GheNgoi_GheSo_FK FOREIGN KEY (GheSo) REFERENCES GheKhach(GheSo);
-ALTER TABLE GheNgoi ADD CONSTRAINT GheNgoi_MSLMB_FK FOREIGN KEY (MSLMB) REFERENCES LoaiMayBay(MSLMB);
+ALTER TABLE GheNgoi ADD CONSTRAINT GheNgoi_GheSo_FK FOREIGN KEY (GheSo) REFERENCES GheKhach(GheSo);	------> Error
+ALTER TABLE GheNgoi ADD CONSTRAINT GheNgoi_MSLMB_FK FOREIGN KEY (MSLMB) REFERENCES LoaiMayBay(MSLMB); ----> OK
 
 --GiaThucPham--->ThucPham
 ALTER TABLE GiaThucPham ADD CONSTRAINT GiaThucPham_MSTP_FK FOREIGN KEY (MSTP) REFERENCES ThucPham(MSTP);
