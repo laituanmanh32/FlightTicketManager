@@ -1,13 +1,13 @@
 
-------------1. Bang Khach Hang --> OK ---------------------
+------------1. Bang Khach Hang---------------------
 create table KhachHang
 (MSKH           char(12)        NOT NULL     PRIMARY KEY,
-constraint      check_MSKH check (regexp_like (MSKH, '^(NL|TE|)[0-9]{10}')),
+constraint      check_MSKH check (regexp_like (MSKH, '[NL|TE][0-9]{10}')),
 HoTen           VARCHAR2(25)    NOT NULL,
 NgaySinh        date            NOT NULL,
-GioiTinh        VARCHAR(3)      NOT NULL check (regexp_like(GioiTinh,'(Nam|Nu)')), 
+GioiTinh        VARCHAR(3)      NOT NULL check (regexp_like(GioiTinh,'[Nam|Nu]')), 
 QuocTich        VARCHAR(15)     NOT NULL,
-SoDT            varchar(13)     NOT NULL check (regexp_like (SoDT,'^(\+84)[0-9]{9}[0-9|]?')),
+SoDT            number     NOT NULL check (regexp_like (SoDT,'[+84([0-9]){9}[0-9|]')),
 DiaChi          VARCHAR(50)     NOT NULL,
 MSTTTG          VARCHAR(10)     NOT NULL,
 MSPHH           VARCHAR(10)     NOT NULL,
@@ -15,29 +15,29 @@ MSCB            VARCHAR(10)     NOT NULL,
 KhoiLuongVuot   number           NOT NULL
 );
 
--------------2. Bang KhachHangNL -> Foreign Key-------------
+-------------2. Bang KhachHangNL-------------
 create table KhachHangNL
 (
 MSKH           	char(12)        NOT NULL     PRIMARY KEY,
-constraint      check_MSKH,
+constraint      check_MSKH check (regexp_like (MSKH, '[NL][0-9]{10}')),
 CMND         	number      NOT NULL UNIQUE,
 Passport     	VARCHAR     NOT NULL,
-constraint      check_Passport check(regexp_like(Passport,'^B[0-9]{7}$'))
+constraint      check_Passport check(regexp_like(Passport,'[B[0-9]{7}]'))
 );
 
--------------3. KhachHangTE -> Foreign Key-----------------
+-------------3. KhachHangTE-----------------
 create table KhachHangTE
 (
-MSKH           	char(12)         	NOT NULL     PRIMARY KEY,
-constraint      check_MSKH,
-MSNGH       	VARCHAR(10)      	NOT NULL,
-ThongTinKSinh   VARCHAR(50) 		NOT NULL,
+MSKH           	char(12)        NOT NULL     PRIMARY KEY,
+constraint      check_MSKH check (regexp_like (MSKH, '[TE][0-9]{10}')),
+MSNGH       	VARCHAR(10)       NOT NULL,
+ThongTinKSinh   VARCHAR(50) NOT NULL,
 );
 ------------4. Trangthai TG------------------
 create table TrangThaiTG
 (
 MSTTTG    		int NULL,
-TenTT 	  		varchar(2) NOT NULL	 check(regexp_like(TenTT,'(TG|HH|DD)')),
+TenTT 	  		varchar(2) NOT NULL	 check(regexp_like(TenTT,'[TG|HH|DD]')),
 PhanTramTP		float	  NOT NULL,
 primary key(MSTTTG)
 );
@@ -80,7 +80,8 @@ MSTB        varchar(10)         not null,
 ---------------7. Ghe Khach-------------------
 create table GheKhach
 (
-MSKH           	char(12)			,
+MSKH           	char(12)        NOT NULL     PRIMARY KEY,
+constraint      check_MSKH check (regexp_like (MSKH, '[NL|TE][0-9]{10}')),
 GheSo       	int         NOT NULL,
 Gia         	number      NOT NULL,
 CONSTRAINT 		PR_KEY_GheKhach Primary key (MSKH,Gheso) ENABLE
@@ -88,12 +89,18 @@ CONSTRAINT 		PR_KEY_GheKhach Primary key (MSKH,Gheso) ENABLE
 
 create table MayBay
 (
+MSMB        varchar(20)       not null          primary key,
+constraint      check_Maybay check (regexp_like (MSMB, 'SAP[0-9]{3}')),
+TongGioBay      number        not null,
+NamSX           int           not null,
+ThoiDiemSD      date          not null,
+MSLMB           varchar(20)   not null,
 )
 
 -----------------9. Loai May bay--------------
 create table LoaiMayBay
 (
-MSLMB       int       Auto_increment        NOT NULL        primary key,
+MSLMB       int               NOT NULL        primary key,
 HangSX      char(20)                        not null,
 Moden       char                            not null,
 SoGheVip    int                             not null,
@@ -104,6 +111,11 @@ TongSoGhe   int                             not null,
 -----------------10. Ghe Ngoi----------------
 create table GheNgoi
 (
+MSG         number         not null           primary key,
+Gheso       varchar(3)     not null           unique,
+constraint  check_GheNgoi  check(regexp_like(GheSo,'')),
+LoaiGhe     varchar(3)     not null           check(LoaiGhe in ('VIP','PT')),
+MSLMB       varchar(10)    not null, 
 )
 
 
@@ -118,6 +130,10 @@ MSG_Den       char(10)                            not null,
 ----------
 create table Ga
 (
+MSG       number          not null          primary key,
+TenSB     varchar(15)     not null,
+ThanhPho  varchar(15)     not null,
+QuocGia   varchar(15)     not null,
 )
 
 ----------------------13. Thucpham
@@ -130,6 +146,9 @@ MoTa        char(50)        not null       ,
 
 create table GiaThucPham
 (
+MSTP          int          not null         primary key,
+Ten           varchar(20)  not null,
+MoTa          varchar(20)  not null,
 )
 
 -------------------15.chuyen bay thuc pham--------
@@ -144,18 +163,18 @@ constraint 	PR_key_ChuyenBayThucPham primary key (MSTB,MSTP)     enable
 create table NhanVien
 (
 MSNV        varchar(20)          not null        primary key,
-constraint  check_NhanVien check (regexp_like (MSNV, '^(PC|TV|KT|DH|KS][0-9){10}')),
+constraint  check_NhanVien check (regexp_like (MSNV, '[PC|TV|KT|DH|KS][0-9]{10}')),
 HoTen       varchar(20)          not null,
 NgaySinh    date              not null,
 GioiTinh    varchar(3)           not null      check(GioiTinh in ('NAM','NU')),
 QuocTich    varchar(20)          not null,
 CMND        varchar(15)          not null       unique,
 Passport    varchar(8),
-constraint      check_Passport check(regexp_like(Passport,'^B[0-9]{7}$')),
+constraint      check_Passport check(regexp_like(Passport,'[B[0-9]{7}]')),
 NgayVaoLam  date              not null,
-DiaChi      char(50)          not null, 
-SoDT        char(15)          not null        check (regexp_like (SoDT,'^(\+84)[0-9]{9}[0-9|]?')),
-TienLuong   number(15)        not null
+DiaChi      varchar(50)          not null, 
+SoDT        varchar(15)          not null        check (regexp_like (SoDT,'[+84([0-9]){9}[0-9|]')),
+TienLuong   number(15)        not null,
 );
 
 
@@ -197,6 +216,7 @@ MSNV_Truong         varchar (20)          not null,
 
 create table NVMatDat_CaLV
 (
+
 )
 
 create table VanHanh
