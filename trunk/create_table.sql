@@ -5,7 +5,7 @@ alter session set NLS_DATE_FORMAT='<dd/mm/yyyy>';
 
 ------------1. Bang Khach Hang---------------------
 create table KhachHang
-(MSKH           varchar(12)        NOT NULL     PRIMARY KEY,
+(MSKH           varchar(12)        NOT NULL  ,
 constraint      check_MSKH check (regexp_like (MSKH, '^(NL|TE)[0-9]{10}$')),
 HoTen           VARCHAR(25)    NOT NULL,
 NgaySinh        date            NOT NULL,
@@ -14,10 +14,11 @@ constraint      check_GioiTinh check (regexp_like(GioiTinh,'(Nam|Nu)')),
 QuocTich        VARCHAR(15)     NOT NULL,
 SoDT            number     		NOT NULL check (regexp_like (SoDT,'^(+84)[0-9]{9}[0-9|]?$')),
 DiaChi          VARCHAR(50)     NOT NULL,
-MSTTTG          VARCHAR(10)     NOT NULL, /*Foreign key*/
-MSPHH           VARCHAR(10)     NOT NULL, /*Foreign key*/
-MSCB            VARCHAR(10)     NOT NULL, /*Foreign key*/
-KhoiLuongVuot   number          NOT NULL
+MSTTTG          int     NOT NULL, /*Foreign key*/
+MSPHH           int     NOT NULL, /*Foreign key*/
+MSCB            VARCHAR(20)     NOT NULL, /*Foreign key*/
+KhoiLuongVuot   number          NOT NULL,
+primary key (MSKH)
 );
 ------------ Generate auto increase ID ---------------
 CREATE or REPLACE FUNCTION ID_GEN(seed in number, precious in number)
@@ -153,7 +154,7 @@ primary key (MSCB)
 create table GheKhach
 (
 MSKH           	varchar(12)        	not null,
-GheSo       	varchar(3)        	not null,
+GheSo       	varchar(3)        	not null       unique,
 Gia         	number      		not null,
 CONSTRAINT 		PR_KEY_GheKhach 	primary key (MSKH,Gheso) ENABLE
 );
@@ -210,10 +211,10 @@ END;
 -------------------11. Tuyen bay-------------
 create table TuyenBay
 (
-MSTB          int          not null, /* Auto increment */
+MSTB          varchar(9)          not null, /* Auto increment */
 MSG_Di        char(10)     not null,
 MSG_Den       char(10)     not null,
-primary key   (MSTB),
+primary key   (MSTB)
 );
 
 -------------------12. Ga---------------------
@@ -223,34 +224,34 @@ MSGa      number          not null, /* Thay viet trung Ma So GA va Ma So Ghe */
 TenSB     varchar(15)     not null,
 ThanhPho  varchar(15)     not null,
 QuocGia   varchar(15)     not null,
-primary key ( MSGa),
+primary key ( MSGa)
 );
 
 ----------------------13. Thucpham----------------
 create table ThucPham
 (
-MSTP        char(20)        not null,
-Ten         char(20)        not null,
-MoTa        char(50)        not null,
-primary key (MSTP),
+MSTP        varchar(20)        not null,
+Ten         varchar(20)        not null,
+MoTa        varchar(50)        not null,
+primary key (MSTP)
 );
 
 ----------------------14. GiaThucPham---------------
 create table GiaThucPham
 (
-MSGTP		  varchar(20)  not null,    /* Auto_increment*/
+MSGTP		  int   not null,    /* Auto_increment*/
 Gia			  number	   not null,
 NgayApDung	  date		   not null,
-MoTa          varchar(20)  not null,
-primary key(MSGTP),
-)
+MSTP      varchar(20)    not null,
+primary key(MSGTP)
+);
 
 -------------------15.Chuyen bay thuc pham--------
 create table ChuyenBayThucPham
 (
-MSTB          int          not null, /* Auto increment */
-MSTP          char(20)     not null,
-constraint 	PR_key_ChuyenBayThucPham primary key (MSTB,MSTP)     enable
+MSCB          varchar(9)          not null, /* Auto increment */
+MSTP          varchar(20)     not null,
+constraint 	PR_key_ChuyenBayThucPham primary key (MSCB,MSTP)     enable
 );
 
 -------------------16. Nhan vien ------------------
@@ -264,12 +265,12 @@ GioiTinh    varchar(3)           not null      check(GioiTinh in ('NAM','NU')),
 QuocTich    varchar(20)          not null,
 CMND        varchar(20)          not null       unique,
 Passport    varchar(8),
-constraint      check_Passport 	check(regexp_like(Passport,'[B[0-9]{7}]')),
+constraint      check_Passport_Nhanvien 	check(regexp_like(Passport,'[B[0-9]{7}]')),
 NgayVaoLam  date              	not null,
 DiaChi      varchar(50)         not null, 
 SoDT        varchar(15)         not null        check (regexp_like (SoDT,'[+84([0-9]){9}[0-9|]')),/*regexp*/
 TienLuong   number(15)        	not null,
-primary key ( MSNV),
+primary key ( MSNV)
 );
 
 
@@ -281,7 +282,7 @@ TenBangCap         varchar(20)        not null,
 TruongDaoTao       varchar(20)        not null,
 NamDat             varchar(20)        not null,
 MSNV               varchar(20)        not null,
-primary key(MSBC),
+primary key(MSBC)
 );
 
 ------------------18.PhiCong-------------------
@@ -289,7 +290,7 @@ create table PhiCong
 (
 MSNV                varchar(20) not null,
 LoaiPhiCong         varchar(2)  not null  check(LoaiPhiCong in('CT','PL')),
-primary key ( MSNV),
+primary key ( MSNV)
 );
 
 ------------------19. Tiep Vien-------------
@@ -297,65 +298,74 @@ create table TiepVien
 (
 MSNV                varchar (20)  not null,
 NgoaiNguThongThao   varchar (20)  not null,
-primary key (MSNV),
+primary key (MSNV)
 );
 
-------------------20. Ca lam viec----------------
+------------------20. Chi Nhanh
+create table ChiNhanh
+(
+MSCN			varchar(20)				not null,
+TenChiNhanh		varchar(20)				not null,
+ThanhPho		varchar(20)				not null,
+QuocGia			varchar(20)				not null,
+primary key		(MSCN)
+);
+------------------21. Ca lam viec----------------
 create table CaLamViec
-(MSCLV      varchar(3)      not null,
-constraint      check_CaLamViec check (regexp_like (MSCLV, '[C][1-3]')), /* regexp*/
-TuGio          time         not null,
-DenGio         time         not null,
-primary key ( MSCLV),
+(MSCLV         varchar(3)      not null,
+constraint     check_CaLamViec check (regexp_like (MSCLV, '[C][1-3]')), /* regexp*/
+TuGio          timestamp         not null,
+DenGio         timestamp         not null,
+primary key ( MSCLV)
 );
 
--------------------21. Nhan vien MD----------------------
+-------------------22. Nhan vien MD----------------------
 create table NhanVienMD
 (
 MSNV                varchar (20) 		  not null,
 MSCN                varchar (20)          not null,
 MSNV_Truong         varchar (20)          not null,
-primary key(MSNV),
+primary key(MSNV)
 );
 
-------------------22.NVMatDat_CaLV------------------
+------------------23.NVMatDat_CaLV------------------
 create table NVMatDat_CaLV
 (
 MSNV				varchar(20)			  not null,
 MSCLV				varchar(20)			  not null,
 NgayBatDau			date				  not null,
-primary key(MSNV,MSCLV),
+primary key(MSNV,MSCLV)
 );
-------------------23. Van Hanh-------------------
+------------------24. Van Hanh-------------------
 create table VanHanh
 (
 MSNV        varchar(20)       not null,
 MSCB        varchar(9)        not null,
-primary key(MSNV,MSCB),
+primary key(MSNV,MSCB)
 );
 
-------------------24. Lai----------------------
+------------------25. Lai----------------------
 create table Lai
 (
 MSNV        varchar(20)       not null,
 MSLMB       varchar(20)       not null,
-primary key (MSNV,MSLMB),
+primary key (MSNV,MSLMB)
 );
 
--------------------25. Kiem tra------------------
+-------------------26. Kiem tra------------------
 create table KiemTra
 (
 MSNV        varchar(20)       not null,
 MSCB        varchar(9)        not null,
-primary key(MSNV,MSCB),
+primary key(MSNV,MSCB)
 );
 
---------------------26. Chuyen mon BD-----------------
+--------------------27. Chuyen mon BD-----------------
 create table ChuyenMonBD
 (
 MSNV        varchar(20)       not null,
 MSLMB       varchar(20)       not null,
-primary key (MSNV, MSLMB),
+primary key (MSNV, MSLMB)
 );
 
 /*		MAPPING FOREIGN KEY 	*/
@@ -367,11 +377,10 @@ ALTER TABLE KhachHang ADD CONSTRAINT KhachHang_MSCB_FK   FOREIGN KEY (MSCB)   RE
 
 
 --KhachHangNL ----> KhachHang,KhachHangNL
-ALTER TABLE KhachHangTE ADD CONSTRAINT KhachHangTE_MSKH_FK FOREIGN KEY (MSKH) REFERENCES KhachHang(MSKH);
-ALTER TABLE KhachHangTE ADD CONSTRAINT KhachHangTE_MSNGH_FK FOREIGN KEY (MSNGH) REFERENCES KhachHangNL(MSKH);
+ALTER TABLE KhachHangNL ADD CONSTRAINT KhachHangNL_MSKH_FK FOREIGN KEY (MSKH) REFERENCES KhachHang(MSKH);
 /*CHECKED*/
 --KhachHangTE-----> KhachHang
-ALTER TABLE KhachHangTE ADD CONSTRAINT KhachHangTE_FK FOREIGN KEY (MSKH) REFERENCES KhachHang(MSKH);
+ALTER TABLE KhachHangTE ADD CONSTRAINT KhachHangTE_MSKH_FK FOREIGN KEY (MSKH) REFERENCES KhachHang(MSKH);
 /*CHECKED*/
 --ChuyenBay--->MayBay,TuyenBay
 ALTER TABLE ChuyenBay ADD CONSTRAINT ChuyenBay_MSMB_FK FOREIGN KEY (MSMB) REFERENCES MayBay(MSMB);
@@ -408,8 +417,8 @@ ALTER TABLE NhanVienMD ADD CONSTRAINT NhanVienMD_MSNV_FK FOREIGN KEY (MSNV) REFE
 ALTER TABLE NhanVienMD ADD CONSTRAINT NhanVienMD_MSCN_FK FOREIGN KEY (MSCN) REFERENCES ChiNhanh(MSCN);
 
 --NhanVienMD_CaLV----->NhanVien, CaLamViec
-ALTER TABLE NhanVienMD_CaLV ADD CONSTRAINT NhanVienMD_CaLV_MSNV_FK FOREIGN KEY (MSNV) REFERENCES NhanVien(MSNV);
-ALTER TABLE NhanVienMD_CaLV ADD CONSTRAINT NhanVienMD_CaLV_MSCLV_FK FOREIGN KEY (MSCLV) REFERENCES CaLamViec(MSCLV);
+ALTER TABLE NVMatDat_CaLV ADD CONSTRAINT NhanVienMD_CaLV_MSNV_FK FOREIGN KEY (MSNV) REFERENCES NhanVien(MSNV);
+ALTER TABLE NVMatDat_CaLV ADD CONSTRAINT NhanVienMD_CaLV_MSCLV_FK FOREIGN KEY (MSCLV) REFERENCES CaLamViec(MSCLV);
 
 --VanHanh----------> NhanVien,ChuyenBay
 ALTER TABLE VanHanh ADD CONSTRAINT VanHanh_MSNV_FK FOREIGN KEY (MSNV) REFERENCES NhanVien(MSNV);
@@ -426,3 +435,5 @@ ALTER TABLE KiemTra ADD CONSTRAINT KiemTra_MSCB_FK FOREIGN KEY (MSCB) REFERENCES
 --ChuyenMonBD--------> NhanVien,LoaiMayBay
 ALTER TABLE ChuyenMonBD ADD CONSTRAINT ChuyenMonBD_MSNV_FK FOREIGN KEY (MSNV) REFERENCES NhanVien(MSNV);
 ALTER TABLE ChuyenMonBD ADD CONSTRAINT ChuyenMonBD_MSLMB_FK FOREIGN KEY (MSLMB) REFERENCES LoaiMayBay(MSLMB);
+
+--------------DONE--------------------
