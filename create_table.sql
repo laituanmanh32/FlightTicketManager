@@ -1,5 +1,6 @@
 /*		Pre-setting			*/
-alter session set NLS_DATE_FORMAT='<dd/mm/yyyy>';
+alter session set NLS_DATE_FORMAT='dd/mm/yyyy';
+alter session set NLS_TIMESTAMP_FORMAT='hh24';
 /***********************************************/
 
 
@@ -14,8 +15,8 @@ constraint      check_GioiTinh check (regexp_like(GioiTinh,'(Nam|Nu)')),
 QuocTich        VARCHAR(15)     NOT NULL,
 SoDT            number     		NOT NULL check (regexp_like (SoDT,'^(+84)[0-9]{9}[0-9|]?$')),
 DiaChi          VARCHAR(50)     NOT NULL,
-MSTTTG          int     NOT NULL, /*Foreign key*/
-MSPHH           int     NOT NULL, /*Foreign key*/
+MSTTTG          number     NOT NULL, /*Foreign key*/
+MSPHH           number     NOT NULL, /*Foreign key*/
 MSCB            VARCHAR(20)     NOT NULL, /*Foreign key*/
 KhoiLuongVuot   number          NOT NULL,
 primary key (MSKH)
@@ -113,7 +114,7 @@ END;
 ---------------5. Phi VCHH-------------------
 create table PhiVCHH
 (
-MSPHH         	int          	NOT NULL,		/* Auto increment */
+MSPHH         	number          	NOT NULL,		/* Auto increment */
 LoaiVe        	VARCHAR(3)      NOT NULL       check(LoaiVe IN ('VIP','PT')), 
 TrongLuongDM  	number       	NOT NULL,
 DonGia_Kg     	number       	NOT NULL,
@@ -145,7 +146,7 @@ SoGheTrong  int                 not null,
 ThoiDiemDi  date           		not null,
 ThoiDiemDen date        		not null,
 MSMB        varchar(20)         not null,
-MSTB        varchar(20)         not null,
+MSTB        number         		not null,
 primary key (MSCB)
 );
 /*DONE!*/
@@ -211,7 +212,7 @@ END;
 -------------------11. Tuyen bay-------------
 create table TuyenBay
 (
-MSTB          varchar(9)          not null, /* Auto increment */
+MSTB          number          not null, /* Auto increment */
 MSG_Di        number     not null,  /* Foreign Key*/
 MSG_Den       number     not null,  /* Foreign Key*/
 primary key   (MSTB)
@@ -309,113 +310,174 @@ constraint 	PR_key_ChuyenBayThucPham primary key (MSCB,MSTP)     enable
 create table NhanVien
 (
 MSNV        varchar(20)          not null,
-constraint  check_NhanVien 		 check (regexp_like (MSNV, '^(PC|TV|KT|DH|KS)[0-9]{10}')),/* regexp sai*/
-HoTen       varchar(20)          not null,
+constraint  check_NhanVien 		 check (regexp_like (MSNV, '^(PC|TV|KT|DH|KS)')),/* regexp sai*/
+HoTen       varchar(50)          not null,
 NgaySinh    date              	 not null,
-GioiTinh    varchar(3)           not null      check(GioiTinh in ('NAM','NU')),
+GioiTinh    varchar(3)           not null      check(GioiTinh in ('Nam','Nu')),
 QuocTich    varchar(20)          not null,
 CMND        varchar(20)          not null       unique,
 Passport    varchar(8),
 constraint      check_Passport_Nhanvien 	check(regexp_like(Passport,'^[A-Z][0-9]{7}')),
 NgayVaoLam  date              	not null,
 DiaChi      varchar(50)         not null, 
-SoDT        varchar(15)         not null        check (regexp_like (SoDT,'^(+84)[0-9]{9}[0-9|]?')),/*regexp*/
+SoDT        varchar(13)         not null        check (regexp_like (SoDT,'^(\+84)[0-9]{9}[0-9|]?')),/*regexp*/
 TienLuong   number(15)        	not null,
 primary key ( MSNV)
 );
+CREATE sequence NhanVien_MSNV_PC_sq;
+CREATE sequence NhanVien_MSNV_TV_sq;
+CREATE sequence NhanVien_MSNV_KT_sq;
+CREATE sequence NhanVien_MSNV_DH_sq;
+CREATE sequence NhanVien_MSNV_KS_sq;
 
+------------ Trigger to handler everything in NhanVienTable --------
+CREATE or REPLACE TRIGGER NhanVien_Handler_trg
+BEFORE INSERT on NhanVien
+FOR EACH ROW
+DECLARE
+temp varchar(50);
+BEGIN
+  CASE :new.MSNV
+    when 'PC' then temp := 'PC'||ID_GEN(NhanVien_MSNV_PC_sq.nextval,10);
+    when 'TV' then temp := 'TV'||ID_GEN(NhanVien_MSNV_TV_sq.nextval,10);
+    when 'KT' then temp := 'KT'||ID_GEN(NhanVien_MSNV_KT_sq.nextval,10);
+    when 'DH' then temp := 'DH'||ID_GEN(NhanVien_MSNV_DH_sq.nextval,10);
+    when 'KS' then temp := 'KS'||ID_GEN(NhanVien_MSNV_KS_sq.nextval,10);
+  END CASE;
+  
+  SELECT temp
+  INTO :new.MSNV
+  FROM DUAL;
+END;
+/
+/*DONE!*/
 
 -------------------17. Bang cap---------------------
 create table BangCap
 (
-MSBC               varchar(10)        not null,
+MSBC               number			  not null,
 TenBangCap         varchar(20)        not null,
 TruongDaoTao       varchar(20)        not null,
 NamDat             varchar(20)        not null,
-MSNV               varchar(20)        not null,
+MSNV               varchar(20)        not null, /*Foreign Key*/
 primary key(MSBC)
 );
+create sequence BangCap_seq;
+
+CREATE OR REPLACE TRIGGER BangCap_In_trg 
+BEFORE INSERT ON BangCap 
+FOR EACH ROW
+BEGIN
+  SELECT BangCap_seq.nextval
+  INTO   :new.MSBC
+  FROM   dual;
+END;
+/
+/*DONE!*/
 
 ------------------18.PhiCong-------------------
 create table PhiCong
 (
-MSNV                varchar(20) not null,
+MSNV                varchar(20) not null, /*Foreign Key*/
 LoaiPhiCong         varchar(2)  not null  check(LoaiPhiCong in('CT','PL')),
-primary key ( MSNV)
+constraint 			PhiCong_MSNV_check	  Check(regexp_like (MSNV, '^(PC)+')),
+primary key ( MSNV)	
 );
+/*Done*/
 
 ------------------19. Tiep Vien-------------
 create table TiepVien
 (
-MSNV                varchar (20)  not null,
+MSNV                varchar (20)  not null, /*Foreign key*/
 NgoaiNguThongThao   varchar (20)  not null,
 primary key (MSNV)
 );
+/*DONE!*/
 
 ------------------20. Chi Nhanh
 create table ChiNhanh
 (
-MSCN			varchar(20)				not null,
+MSCN			number				not null,
 TenChiNhanh		varchar(20)				not null,
 ThanhPho		varchar(20)				not null,
 QuocGia			varchar(20)				not null,
 primary key		(MSCN)
 );
+create sequence ChiNhanh_seq;
+
+CREATE OR REPLACE TRIGGER ChiNhanh_In_trg 
+BEFORE INSERT ON ChiNhanh
+FOR EACH ROW
+BEGIN
+  SELECT ChiNhanh_seq.nextval
+  INTO   :new.MSCN
+  FROM   dual;
+END;
+/
+
 ------------------21. Ca lam viec----------------
 create table CaLamViec
-(MSCLV         varchar(3)      not null,
-constraint     check_CaLamViec check (regexp_like (MSCLV, '[C][1-3]')), /* regexp*/
+(MSCLV         varchar(2)      not null,
+constraint     check_CaLamViec check (regexp_like (MSCLV, '^(C)[1-3]')), /* regexp*/
 TuGio          timestamp         not null,
 DenGio         timestamp         not null,
 primary key ( MSCLV)
 );
+/*DONE*/
 
 -------------------22. Nhan vien MD----------------------
 create table NhanVienMD
 (
-MSNV                varchar (20) 		  not null,
-MSCN                varchar (20)          not null,
-MSNV_Truong         varchar (20)          not null,
+MSNV                varchar (20) 		      	not null, /*Foreign Key*/
+MSCN                Number          			not null, /*Foreign key*/
+MSNV_Truong         varchar (20)          		not null, /*Foreign Key*/
+constraint 			NhanVienMD_MSNV_check		check(regexp_like (MSNV, '^(KT|DH|KS)+')),
 primary key(MSNV)
 );
+/*DONE*/
 
 ------------------23.NVMatDat_CaLV------------------
 create table NVMatDat_CaLV
 (
-MSNV				varchar(20)			  not null,
-MSCLV				varchar(20)			  not null,
+MSNV				varchar(20)			  not null, /*foreign key*/
+MSCLV				varchar(2)			  not null, /*foreign key*/
 NgayBatDau			date				  not null,
 primary key(MSNV,MSCLV)
 );
+/*Done*/
 ------------------24. Van Hanh-------------------
 create table VanHanh
 (
-MSNV        varchar(20)       not null,
-MSCB        varchar(9)        not null,
+MSNV        varchar(20)       not null, /*Foreign Key*/
+MSCB        varchar(9)        not null, /*Foreign Key*/
+constraint  VanHanh_MSNV_Check check(regexp_like (MSNV, '^(PC|TV)+')),
 primary key(MSNV,MSCB)
 );
-
+/*Done*/
 ------------------25. Lai----------------------
 create table Lai
 (
-MSNV        varchar(20)       not null,
-MSLMB       varchar(20)       not null,
+MSNV        varchar(20)       not null, /*Foreign Key*/
+MSLMB       varchar(20)       not null, /*Foreign Key*/
+constraint  Lai_MSNV_check    check(regexp_like (MSNV, '^(PC)+')),
 primary key (MSNV,MSLMB)
 );
-
+/*Done*/
 -------------------26. Kiem tra------------------
 create table KiemTra
 (
-MSNV        varchar(20)       not null,
-MSCB        varchar(9)        not null,
+MSNV        varchar(20)       not null, /*Foreign Key*/
+MSCB        varchar(9)        not null, /*Foreign Key*/
+constraint  KiemTra_MSNV_check  check(regexp_like (MSNV, '^(KT)+')),
 primary key(MSNV,MSCB)
 );
 
 --------------------27. Chuyen mon BD-----------------
 create table ChuyenMonBD
 (
-MSNV        varchar(20)       not null,
-MSLMB       varchar(20)       not null,
+MSNV        varchar(20)       not null, /*Foreign Key*/
+MSLMB       varchar(20)       not null, /*Foreign Key*/
+constraint  ChuyenMonBD_MSNV_check       check(regexp_like (MSNV, '^(KT)+')),
 primary key (MSNV, MSLMB)
 );
 
@@ -451,8 +513,8 @@ ALTER TABLE GheNgoi ADD CONSTRAINT GheNgoi_GheSo_FK FOREIGN KEY (GheSo) REFERENC
 ALTER TABLE GheNgoi ADD CONSTRAINT GheNgoi_MSLMB_FK FOREIGN KEY (MSLMB) REFERENCES LoaiMayBay(MSLMB); ----> OK
 
 --TuyenBay ---> Ga
-ALTER TABLE TuyenBay ADD CONSTRAINT TuyenBay_MSG_Di_fk FOREIGN KEY (MSG_Di) REFERENCES Ga(MSGa);
-ALTER TABLE TuyenBay ADD CONSTRAINT TuyenBay_MSG_Den_fk FOREIGN KEY (MSG_Den) REFERENCES Ga(MSGa);
+ALTER TABLE TuyenBay ADD CONSTRAINT TuyenBay_MSGa_Di_fk FOREIGN KEY (MSG_Di) REFERENCES Ga(MSGa);
+ALTER TABLE TuyenBay ADD CONSTRAINT TuyenBay_MSGa_Den_fk FOREIGN KEY (MSG_Den) REFERENCES Ga(MSGa);
 /*CHECKED*/
 
 --GiaThucPham--->ThucPham
@@ -474,6 +536,7 @@ ALTER TABLE TiepVien ADD CONSTRAINT TiepVien_MSNV_FK FOREIGN KEY (MSNV) REFERENC
 --NhanVienMD-----> NhanVien,ChiNhanh
 ALTER TABLE NhanVienMD ADD CONSTRAINT NhanVienMD_MSNV_FK FOREIGN KEY (MSNV) REFERENCES NhanVien(MSNV);
 ALTER TABLE NhanVienMD ADD CONSTRAINT NhanVienMD_MSCN_FK FOREIGN KEY (MSCN) REFERENCES ChiNhanh(MSCN);
+ALTER TABLE NhanVienMD ADD CONSTRAINT NhanVienMD_MSNV_Truong_FK FOREIGN KEY (MSNV_Truong) REFERENCES NhanVienMD(MSNV);
 
 --NhanVienMD_CaLV----->NhanVien, CaLamViec
 ALTER TABLE NVMatDat_CaLV ADD CONSTRAINT NhanVienMD_CaLV_MSNV_FK FOREIGN KEY (MSNV) REFERENCES NhanVien(MSNV);
