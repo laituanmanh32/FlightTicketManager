@@ -1,3 +1,41 @@
+
+
+------------ TrangThaiTG ------------------
+INSERT INTO TrangThaiTG(TenTT, PhanTramTP)
+VALUES ('TG',100);
+INSERT INTO TrangThaiTG(TenTT, PhanTramTP)
+VALUES ('TG',100);
+INSERT INTO TrangThaiTG(TenTT, PhanTramTP)
+VALUES ('DD',100);
+INSERT INTO TrangThaiTG(TenTT, PhanTramTP)
+VALUES ('HH',100);
+
+------------ PhiVCHH ----------------------
+INSERT INTO PhiVCHH(LoaiVe, TrongLuongDM, DonGia_Kg, ThoiDiemApDung)
+VALUES ('PT',10,100000,current_date);
+INSERT INTO PhiVCHH(LoaiVe, TrongLuongDM, DonGia_Kg, ThoiDiemApDung)
+VALUES ('VIP',20,100000,current_date);
+INSERT INTO PhiVCHH(LoaiVe, TrongLuongDM, DonGia_Kg, ThoiDiemApDung)
+VALUES ('PT',30,100000,current_date);
+INSERT INTO PhiVCHH(LoaiVe, TrongLuongDM, DonGia_Kg, ThoiDiemApDung)
+VALUES ('VIP',50,100000,current_date);
+
+----------- MayBay -------------------
+INSERT INTO MayBay(MSMB, TongGioBay, NamSX, ThoiDiemSD, MSLMB)
+VALUES ('SAP001',0,2000,current_date,'1');
+INSERT INTO MayBay(MSMB, TongGioBay, NamSX, ThoiDiemSD, MSLMB)
+VALUES ('SAP002',0,2001,current_date,'2');
+INSERT INTO MayBay(MSMB, TongGioBay, NamSX, ThoiDiemSD, MSLMB)
+VALUES ('SAP003',0,2014,current_date,'3');
+INSERT INTO MayBay(MSMB, TongGioBay, NamSX, ThoiDiemSD, MSLMB)
+VALUES ('SAP004',0,2014,current_date,'4');
+
+
+------------ ChuyenBay ---------------------
+INSERT INTO ChuyenBay(MSCB, TrangThai, SoGheTrong, ThoiDiemDi, ThoiDiemDen, MSMB, MSTB)
+VALUES ('SA1234567','CB',0,to_date('31/05/1998-12:00', 'dd/mm/yyyy-hh:mi'),to_date('31/05/1998-12:00', 'dd/mm/yyyy-hh:mi'),'123','123');
+
+
 ---------KhachHang------------
 Insert into KhachHang(HoTen, NgaySinh, GioiTinh, QuocTich, SoDT, DiaChi, MSTTTG, MSPHH, 
 MSCB, KhoiLuongVuot)
@@ -44,29 +82,6 @@ VALUES ('TE0000000003','Trần Như Nhộng','NL0000000003');
 INSERT INTO KhachHangTE(MSKH, ThongTinKSinh, MSNGH)
 VALUES ('TE0000000004','','NL0000000004');
 
------------- TrangThaiTG ------------------
-INSERT INTO TrangThaiTG(TenTT, PhanTramTP)
-VALUES ('TG',100);
-INSERT INTO TrangThaiTG(TenTT, PhanTramTP)
-VALUES ('TG',100);
-INSERT INTO TrangThaiTG(TenTT, PhanTramTP)
-VALUES ('DD',100);
-INSERT INTO TrangThaiTG(TenTT, PhanTramTP)
-VALUES ('HH',100);
-
------------- PhiVCHH ----------------------
-INSERT INTO PhiVCHH(LoaiVe, TrongLuongDM, DonGia_Kg, ThoiDiemApDung)
-VALUES ('PT',10,100000,current_date);
-INSERT INTO PhiVCHH(LoaiVe, TrongLuongDM, DonGia_Kg, ThoiDiemApDung)
-VALUES ('VIP',20,100000,current_date);
-INSERT INTO PhiVCHH(LoaiVe, TrongLuongDM, DonGia_Kg, ThoiDiemApDung)
-VALUES ('PT',30,100000,current_date);
-INSERT INTO PhiVCHH(LoaiVe, TrongLuongDM, DonGia_Kg, ThoiDiemApDung)
-VALUES ('VIP',50,100000,current_date);
-
------------- ChuyenBay ---------------------
-INSERT INTO ChuyenBay(MSCB, TrangThai, SoGheTrong, ThoiDiemDi, ThoiDiemDen, MSMB, MSTB)
-VALUES ('SA1234567','CB',0,to_date('31/05/1998-12:00', 'dd/mm/yyyy-hh:mi'),to_date('31/05/1998-12:00', 'dd/mm/yyyy-hh:mi'),'123','123');
 
 
 ------------- GheKhach ----------------------
@@ -95,12 +110,65 @@ VALUES ('3','Boeing','999',50,200,250);
 INSERT INTO LoaiMayBay(MSLMB, HangSX, Model_, SoGheVip, SoGhePT, TongSoGhe)
 VALUES ('4','Boeing','666',100,1000,1100);
 
------------ MayBay -------------------
-INSERT INTO MayBay(MSMB, TongGioBay, NamSX, ThoiDiemSD, MSLMB)
-VALUES ('SAP001',0,2000,current_date,'1');
-INSERT INTO MayBay(MSMB, TongGioBay, NamSX, ThoiDiemSD, MSLMB)
-VALUES ('SAP002',0,2001,current_date,'2');
-INSERT INTO MayBay(MSMB, TongGioBay, NamSX, ThoiDiemSD, MSLMB)
-VALUES ('SAP003',0,2014,current_date,'3');
-INSERT INTO MayBay(MSMB, TongGioBay, NamSX, ThoiDiemSD, MSLMB)
-VALUES ('SAP004',0,2014,current_date,'4');
+
+
+---------- Ghe Ngoi --------------------
+INSERT INTO GheNgoi(GheSo, LoaiGhe, MSLMB)
+VALUES ('A01','VIP','1');
+INSERT INTO GheNgoi(GheSo, LoaiGhe, MSLMB)
+VALUES ('A02','VIP','1');
+INSERT INTO GheNgoi(GheSo, LoaiGhe, MSLMB)
+VALUES ('A03','PT','2');
+INSERT INTO GheNgoi(GheSo, LoaiGhe, MSLMB)
+VALUES ('A04','PT','2');
+
+---------- Ga ----------------------------
+INSERT INTO Ga(TenSB, ThanhPho, QuocGia)
+VALUES ('Tân Sơn Nhất', 'Hồ Chí Minh', 'Việt Nam');
+INSERT INTO Ga(TenSB, ThanhPho, QuocGia)
+VALUES ('Nội Bài', 'Hà Nội', 'Việt Nam');
+INSERT INTO Ga(TenSB, ThanhPho, QuocGia)
+VALUES ('Pleiku', 'Pleiku', 'Việt Nam');
+INSERT INTO Ga(TenSB, ThanhPho, QuocGia)
+VALUES ('Cát Bi', 'Hải Phòng', 'Việt Nam');
+
+--------- TuyenBay ----------------------
+INSERT INTO TuyenBay( MSG_Di, MSG_Den)
+VALUES (1,2);
+INSERT INTO TuyenBay( MSG_Di, MSG_Den)
+VALUES (1,3);
+INSERT INTO TuyenBay( MSG_Di, MSG_Den)
+VALUES (1,4);
+INSERT INTO TuyenBay( MSG_Di, MSG_Den)
+VALUES (2,3);
+
+---------- ThucPham ---------------------
+INSERT INTO ThucPham(Ten, MoTa)
+VALUES ('Bánh Mì', 'Làm từ bột mì nguyên chất' );
+INSERT INTO ThucPham(Ten, MoTa)
+VALUES ('Coca-cola','Xoá tan mọi cơn khát');
+INSERT INTO ThucPham(Ten, MoTa)
+VALUES ('Mì tôm', 'Dân dã đến bất ngờ');
+INSERT INTO ThucPham(Ten, MoTa)
+VALUES ('Heo quay', 'Quay heo tại chỗ, bán ra ăn liền');
+
+---------- GiaThucPham -------------------
+INSERT INTO GiaThucPham(Gia, NgayApDung, MSTP)
+VALUES ('10000',current_date, 1);
+INSERT INTO GiaThucPham(Gia, NgayApDung, MSTP)
+VALUES ('7000',current_date,2);
+INSERT INTO GiaThucPham(Gia, NgayApDung, MSTP)
+VALUES ('3000',current_date,3);
+INSERT INTO GiaThucPham(Gia, NgayApDung, MSTP)
+VALUES ('100000',current_date,4);
+
+---------- ChuyenBayThucPham -------------
+INSERT INTO ChuyenBayThucPham(MSCB,MSTP)
+VALUES ('SA1234567',1);
+INSERT INTO ChuyenBayThucPham(MSCB,MSTP)
+VALUES ('SA1234567',2);
+INSERT INTO ChuyenBayThucPham(MSCB,MSTP)
+VALUES ('SA1234567',3);
+INSERT INTO ChuyenBayThucPham(MSCB,MSTP)
+VALUES ('SA1234567',4);
+
