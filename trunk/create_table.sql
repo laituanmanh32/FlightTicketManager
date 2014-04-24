@@ -756,6 +756,10 @@ REFERENCES LoaiMayBay
 )
 ;
 /***********************************************
+******************Index************************/
+CREATE INDEX Chuyenbay_SoGheTrong on chuyenbay(SoGheTrong,MSTB,ThoiDiemDi);
+
+/***********************************************
 ******************TRIGGER************************/
 CREATE OR REPLACE TRIGGER LoaiMayBay_incon_handler_trg BEFORE
   INSERT OR
