@@ -826,5 +826,26 @@ BEGIN
   end;
 END KHOILUONG_COMMIT;
 /
+CREATE OR REPLACE FUNCTION GET_MONEY 
+(
+  MSKH_IN IN VARCHAR2  
+) RETURN NUMBER IS
+MONEY number;
+KL_V number;
+dongia number;
+found number;
+BEGIN
+  
+  SELECT KhoiLuongVuot, PhiVCHH.DonGia_Kg
+  INTO KL_V,dongia
+  FROM KhachHang, PhiVCHH WHERE MSKH = MSKH_IN AND KhachHang.MSPHH = PhiVCHH.MSPHH; 
+  select 1 into found from KhachHang where MSKH = MSKH_IN ;
+  IF (found =NULL)then
+    Money := Dongia*KL_V;
+  end if;
+
+  RETURN money;
+END GET_MONEY;
+/
 --------------DONE--------------------
 
