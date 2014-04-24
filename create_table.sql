@@ -212,29 +212,67 @@ END;
 create table TuyenBay
 (
 MSTB          varchar(9)          not null, /* Auto increment */
-MSG_Di        char(10)     not null,
-MSG_Den       char(10)     not null,
+MSG_Di        number     not null,  /* Foreign Key*/
+MSG_Den       number     not null,  /* Foreign Key*/
 primary key   (MSTB)
 );
+
+create sequence TuyenBay_seq;
+
+CREATE OR REPLACE TRIGGER TuyenBay_In_trg 
+BEFORE INSERT ON TuyenBay 
+FOR EACH ROW
+BEGIN
+  SELECT TuyenBay_seq.nextval
+  INTO   :new.MSTB
+  FROM   dual;
+END;
+/
+/*DONE!*/
 
 -------------------12. Ga---------------------
 create table Ga
 (
-MSGa      number          not null, /* Thay viet trung Ma So GA va Ma So Ghe */
-TenSB     varchar(15)     not null,
+MSGa      number          not null, /* Auto increase */
+TenSB     varchar(50)     not null,
 ThanhPho  varchar(15)     not null,
 QuocGia   varchar(15)     not null,
 primary key ( MSGa)
 );
+create sequence Ga_seq;
+
+CREATE OR REPLACE TRIGGER Ga_In_trg 
+BEFORE INSERT ON Ga 
+FOR EACH ROW
+BEGIN
+  SELECT Ga_seq.nextval
+  INTO   :new.MSGa
+  FROM   dual;
+END;
+/
+/*DONE!*/
 
 ----------------------13. Thucpham----------------
 create table ThucPham
 (
-MSTP        varchar(20)        not null,
+MSTP        number        not null, /* Auto increase */
 Ten         varchar(20)        not null,
-MoTa        varchar(50)        not null,
+MoTa        varchar(100)        not null,
 primary key (MSTP)
 );
+
+create sequence ThucPham_seq;
+
+CREATE OR REPLACE TRIGGER ThucPham_In_trg 
+BEFORE INSERT ON ThucPham 
+FOR EACH ROW
+BEGIN
+  SELECT ThucPham_seq.nextval
+  INTO   :new.MSTP
+  FROM   dual;
+END;
+/
+/*DONE*/
 
 ----------------------14. GiaThucPham---------------
 create table GiaThucPham
@@ -242,33 +280,46 @@ create table GiaThucPham
 MSGTP		  int   not null,    /* Auto_increment*/
 Gia			  number	   not null,
 NgayApDung	  date		   not null,
-MSTP      varchar(20)    not null,
+MSTP      number    not null, /* Foreign Key */
 primary key(MSGTP)
 );
 
+create sequence GiaThucPham_seq;
+
+CREATE OR REPLACE TRIGGER GiaThucPham_In_trg 
+BEFORE INSERT ON GiaThucPham 
+FOR EACH ROW
+BEGIN
+  SELECT GiaThucPham_seq.nextval
+  INTO   :new.MSGTP
+  FROM   dual;
+END;
+/
+/*DONE*/
 -------------------15.Chuyen bay thuc pham--------
 create table ChuyenBayThucPham
 (
 MSCB          varchar(9)          not null, /* Auto increment */
-MSTP          varchar(20)     not null,
+MSTP          number     not null,
 constraint 	PR_key_ChuyenBayThucPham primary key (MSCB,MSTP)     enable
 );
+/*DONE!*/
 
 -------------------16. Nhan vien ------------------
 create table NhanVien
 (
 MSNV        varchar(20)          not null,
-constraint  check_NhanVien 		 check (regexp_like (MSNV, '[PC|TV|KT|DH|KS][0-9]{10}')),/* regexp sai*/
+constraint  check_NhanVien 		 check (regexp_like (MSNV, '^(PC|TV|KT|DH|KS)[0-9]{10}')),/* regexp sai*/
 HoTen       varchar(20)          not null,
 NgaySinh    date              	 not null,
 GioiTinh    varchar(3)           not null      check(GioiTinh in ('NAM','NU')),
 QuocTich    varchar(20)          not null,
 CMND        varchar(20)          not null       unique,
 Passport    varchar(8),
-constraint      check_Passport_Nhanvien 	check(regexp_like(Passport,'[B[0-9]{7}]')),
+constraint      check_Passport_Nhanvien 	check(regexp_like(Passport,'^[A-Z][0-9]{7}')),
 NgayVaoLam  date              	not null,
 DiaChi      varchar(50)         not null, 
-SoDT        varchar(15)         not null        check (regexp_like (SoDT,'[+84([0-9]){9}[0-9|]')),/*regexp*/
+SoDT        varchar(15)         not null        check (regexp_like (SoDT,'^(+84)[0-9]{9}[0-9|]?')),/*regexp*/
 TienLuong   number(15)        	not null,
 primary key ( MSNV)
 );
@@ -379,9 +430,11 @@ ALTER TABLE KhachHang ADD CONSTRAINT KhachHang_MSCB_FK   FOREIGN KEY (MSCB)   RE
 --KhachHangNL ----> KhachHang,KhachHangNL
 ALTER TABLE KhachHangNL ADD CONSTRAINT KhachHangNL_MSKH_FK FOREIGN KEY (MSKH) REFERENCES KhachHang(MSKH);
 /*CHECKED*/
+
 --KhachHangTE-----> KhachHang
 ALTER TABLE KhachHangTE ADD CONSTRAINT KhachHangTE_MSKH_FK FOREIGN KEY (MSKH) REFERENCES KhachHang(MSKH);
 /*CHECKED*/
+
 --ChuyenBay--->MayBay,TuyenBay
 ALTER TABLE ChuyenBay ADD CONSTRAINT ChuyenBay_MSMB_FK FOREIGN KEY (MSMB) REFERENCES MayBay(MSMB);
 ALTER TABLE ChuyenBay ADD CONSTRAINT ChuyenBay_MSTB_FK FOREIGN KEY (MSTB) REFERENCES TuyenBay(MSTB);
@@ -389,12 +442,18 @@ ALTER TABLE ChuyenBay ADD CONSTRAINT ChuyenBay_MSTB_FK FOREIGN KEY (MSTB) REFERE
 --GheKhach--->KhachHang
 ALTER TABLE GheKhach ADD CONSTRAINT GheKhach_MSKH_FK FOREIGN KEY (MSKH) REFERENCES KhachHang(MSKH);
 /*CHECKED*/
+
 --MayBay--->LoaiMayBay
 ALTER TABLE MayBay ADD CONSTRAINT MayBay_MSLMB_FK_FK FOREIGN KEY (MSLMB) REFERENCES LoaiMayBay(MSLMB);	
 
 --GheNgoi--->GheKhach,LoaiMayBay
-ALTER TABLE GheNgoi ADD CONSTRAINT GheNgoi_GheSo_FK FOREIGN KEY (GheSo) REFERENCES GheKhach(GheSo);	------> Error
+ALTER TABLE GheNgoi ADD CONSTRAINT GheNgoi_GheSo_FK FOREIGN KEY (GheSo) REFERENCES GheKhach(GheSo);
 ALTER TABLE GheNgoi ADD CONSTRAINT GheNgoi_MSLMB_FK FOREIGN KEY (MSLMB) REFERENCES LoaiMayBay(MSLMB); ----> OK
+
+--TuyenBay ---> Ga
+ALTER TABLE TuyenBay ADD CONSTRAINT TuyenBay_MSG_Di_fk FOREIGN KEY (MSG_Di) REFERENCES Ga(MSGa);
+ALTER TABLE TuyenBay ADD CONSTRAINT TuyenBay_MSG_Den_fk FOREIGN KEY (MSG_Den) REFERENCES Ga(MSGa);
+/*CHECKED*/
 
 --GiaThucPham--->ThucPham
 ALTER TABLE GiaThucPham ADD CONSTRAINT GiaThucPham_MSTP_FK FOREIGN KEY (MSTP) REFERENCES ThucPham(MSTP);
