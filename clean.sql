@@ -26,6 +26,7 @@ drop table VanHanh cascade constraints;
 drop table Lai cascade constraints;
 drop table KiemTra cascade constraints;
 drop table ChuyenMonBD cascade constraints;
+drop table ChiNhanh cascade constraints;
 
 
 /*   	Drop all sequence		*/
