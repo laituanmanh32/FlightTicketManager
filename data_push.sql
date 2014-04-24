@@ -12,13 +12,13 @@ VALUES ('HH',100);
 
 ------------ PhiVCHH ----------------------
 INSERT INTO PhiVCHH(LoaiVe, TrongLuongDM, DonGia_Kg, ThoiDiemApDung)
-VALUES ('PT',10,100000,current_date);
+VALUES ('PT',20,100000,current_date);
 INSERT INTO PhiVCHH(LoaiVe, TrongLuongDM, DonGia_Kg, ThoiDiemApDung)
-VALUES ('VIP',20,100000,current_date);
+VALUES ('VIP',30,100000,current_date);
 INSERT INTO PhiVCHH(LoaiVe, TrongLuongDM, DonGia_Kg, ThoiDiemApDung)
-VALUES ('PT',30,100000,current_date);
+VALUES ('PT',20,100000,current_date);
 INSERT INTO PhiVCHH(LoaiVe, TrongLuongDM, DonGia_Kg, ThoiDiemApDung)
-VALUES ('VIP',50,100000,current_date);
+VALUES ('VIP',30,100000,current_date);
 
 ---------- LoaiMayBay ----------------
 INSERT INTO LoaiMayBay(MSLMB, HangSX, Model_, SoGheVip, SoGhePT, TongSoGhe)
@@ -62,7 +62,7 @@ VALUES (2,3);
 
 ------------ ChuyenBay ---------------------
 INSERT INTO ChuyenBay(MSCB, TrangThai, SoGheTrong, ThoiDiemDi, ThoiDiemDen, MSMB, MSTB)
-VALUES ('SA1234567','CB',0,to_date('31/05/1998-12:00', 'dd/mm/yyyy-hh:mi'),to_date('31/05/1998-12:00', 'dd/mm/yyyy-hh:mi'),'SAP001',1);
+VALUES ('SA1234567','DB',0,to_date('31/05/1998-12:00', 'dd/mm/yyyy-hh:mi'),to_date('31/05/1998-12:00', 'dd/mm/yyyy-hh:mi'),'SAP001',1);
 INSERT INTO ChuyenBay(MSCB, TrangThai, SoGheTrong, ThoiDiemDi, ThoiDiemDen, MSMB, MSTB)
 VALUES ('SA1234566','CB',0,to_date('31/05/1998-12:00', 'dd/mm/yyyy-hh:mi'),to_date('31/05/1998-12:00', 'dd/mm/yyyy-hh:mi'),'SAP002',2);
 INSERT INTO ChuyenBay(MSCB, TrangThai, SoGheTrong, ThoiDiemDi, ThoiDiemDen, MSMB, MSTB)
