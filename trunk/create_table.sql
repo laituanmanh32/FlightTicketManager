@@ -757,8 +757,12 @@ REFERENCES LoaiMayBay
 ;
 /***********************************************
 ******************Index************************/
-CREATE INDEX Chuyenbay_SoGheTrong on chuyenbay(SoGheTrong,MSTB,ThoiDiemDi);
-
+CREATE INDEX Chuyenbay_SoGheTrong ON chuyenbay
+  (
+    SoGheTrong,
+    MSTB,
+    ThoiDiemDi
+  );
 /***********************************************
 ******************TRIGGER************************/
 CREATE OR REPLACE TRIGGER LoaiMayBay_incon_handler_trg BEFORE
@@ -784,70 +788,80 @@ END;
 /
 /***************************************************
 ******************FUNCTION**************************/
-CREATE OR REPLACE PROCEDURE PhiVCHH_commit 
-(
-  MSKH_IN IN NUMBER
-) IS 
-
-BEGIN
-Declare
-  loaive number;
-  thoidiem date;
-  begin
-    select loaighe
-    into loaive
-    from khachhang,GheKhach,ghengoi
-    where khachhang.MSKH=GheKhach.MSKH And khachhang.MSKH = 'NL0000000002' and ghengoi.gheso = ghekhach.gheso;
-  
-    select MAX(thoidiemapdung)
-    into thoidiem
-    from phivchh;
-  
-    update KhachHang
-    set MSPHH = (SELECT phivchh.MSPHH from phivchh where phivchh.loaive = loaive and thoidiem = phivchh.thoidiemapdung )
-    where Khachhang.MSKH = MSKH_IN;
-    end;
-END PhiVCHH_commit;
-/
-CREATE OR REPLACE PROCEDURE KHOILUONG_COMMIT 
-(
-  MSKH_IN IN VARCHAR2  
-, KHOILUONG IN NUMBER  
-) AS 
+CREATE OR REPLACE
+PROCEDURE PhiVCHH_commit(
+    MSKH_IN IN NUMBER )
+IS
 BEGIN
   DECLARE
-    KL_DM number;
-  begin
+    loaive   NUMBER;
+    thoidiem DATE;
+  BEGIN
+    SELECT loaighe
+    INTO loaive
+    FROM khachhang,
+      GheKhach,
+      ghengoi
+    WHERE khachhang.MSKH=GheKhach.MSKH
+    AND khachhang.MSKH  = 'NL0000000002'
+    AND ghengoi.gheso   = ghekhach.gheso;
+    SELECT MAX(thoidiemapdung) INTO thoidiem FROM phivchh;
+    UPDATE KhachHang
+    SET MSPHH =
+      (SELECT phivchh.MSPHH
+      FROM phivchh
+      WHERE phivchh.loaive = loaive
+      AND thoidiem         = phivchh.thoidiemapdung
+      )
+    WHERE Khachhang.MSKH = MSKH_IN;
+  END;
+END PhiVCHH_commit;
+/
+CREATE OR REPLACE
+PROCEDURE KHOILUONG_COMMIT(
+    MSKH_IN   IN VARCHAR2 ,
+    KHOILUONG IN NUMBER )
+AS
+BEGIN
+  DECLARE
+    KL_DM NUMBER;
+  BEGIN
     SELECT TrongLuongDM
     INTO KL_DM
-    FROM PhiVCHH WHERE MSPHH = (SELECT MSPHH FROM KhachHang WHERE MSKH = MSKH_IN);
-    
-    IF (KL_DM <= Khoiluong) then
+    FROM PhiVCHH
+    WHERE MSPHH =
+      (SELECT MSPHH FROM KhachHang WHERE MSKH = MSKH_IN
+      );
+    IF (KL_DM <= Khoiluong) THEN
       UPDATE KhachHang SET KhoiLuongVuot = 0 WHERE MSKH = MSKH_IN;
-    else
+    ELSE
       UPDATE KhachHang SET KhoiLuongVuot = KhoiLuong - KL_DM WHERE MSKH = MSKH_In;
-    end if;
-  end;
+    END IF;
+  END;
 END KHOILUONG_COMMIT;
 /
-CREATE OR REPLACE FUNCTION GET_MONEY 
-(
-  MSKH_IN IN VARCHAR2  
-) RETURN NUMBER IS
-MONEY number;
-KL_V number;
-dongia number;
-found number;
+CREATE OR REPLACE
+FUNCTION GET_MONEY(
+    MSKH_IN IN VARCHAR2 )
+  RETURN NUMBER
+IS
+  MONEY  NUMBER;
+  KL_V   NUMBER;
+  dongia NUMBER;
+  found  NUMBER;
 BEGIN
-  
-  SELECT KhoiLuongVuot, PhiVCHH.DonGia_Kg
-  INTO KL_V,dongia
-  FROM KhachHang, PhiVCHH WHERE MSKH = MSKH_IN AND KhachHang.MSPHH = PhiVCHH.MSPHH; 
-  select 1 into found from KhachHang where MSKH = MSKH_IN ;
-  IF (found =NULL)then
-    Money := Dongia*KL_V;
-  end if;
-
+  SELECT KhoiLuongVuot,
+    PhiVCHH.DonGia_Kg
+  INTO KL_V,
+    dongia
+  FROM KhachHang,
+    PhiVCHH
+  WHERE MSKH          = MSKH_IN
+  AND KhachHang.MSPHH = PhiVCHH.MSPHH;
+  SELECT 1 INTO found FROM KhachHang WHERE MSKH = MSKH_IN ;
+  IF (found =NULL)THEN
+    Money  := Dongia*KL_V;
+  END IF;
   RETURN money;
 END GET_MONEY;
 /
