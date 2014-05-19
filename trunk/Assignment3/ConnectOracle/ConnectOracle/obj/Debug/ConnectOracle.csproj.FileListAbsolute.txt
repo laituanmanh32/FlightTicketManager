@@ -1,0 +1,6 @@
+c:\users\51202_000\documents\visual studio 2012\Projects\ConnectOracle\ConnectOracle\bin\Debug\ConnectOracle.exe
+c:\users\51202_000\documents\visual studio 2012\Projects\ConnectOracle\ConnectOracle\bin\Debug\ConnectOracle.pdb
+c:\users\51202_000\documents\visual studio 2012\Projects\ConnectOracle\ConnectOracle\bin\Debug\Oracle.DataAccess.dll
+c:\users\51202_000\documents\visual studio 2012\Projects\ConnectOracle\ConnectOracle\obj\Debug\ConnectOracle.csprojResolveAssemblyReference.cache
+c:\users\51202_000\documents\visual studio 2012\Projects\ConnectOracle\ConnectOracle\obj\Debug\ConnectOracle.exe
+c:\users\51202_000\documents\visual studio 2012\Projects\ConnectOracle\ConnectOracle\obj\Debug\ConnectOracle.pdb
