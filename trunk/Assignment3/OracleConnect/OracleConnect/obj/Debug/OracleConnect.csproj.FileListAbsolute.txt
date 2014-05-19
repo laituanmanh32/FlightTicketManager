@@ -1,0 +1,12 @@
+C:\Users\51202_000\Documents\Visual Studio 2012\Projects\OracleConnect\OracleConnect\bin\Debug\Oracle SQL.exe
+C:\Users\51202_000\Documents\Visual Studio 2012\Projects\OracleConnect\OracleConnect\bin\Debug\Oracle SQL.pdb
+C:\Users\51202_000\Documents\Visual Studio 2012\Projects\OracleConnect\OracleConnect\bin\Debug\Oracle.DataAccess.dll
+C:\Users\51202_000\Documents\Visual Studio 2012\Projects\OracleConnect\OracleConnect\obj\Debug\OracleConnect.csprojResolveAssemblyReference.cache
+C:\Users\51202_000\Documents\Visual Studio 2012\Projects\OracleConnect\OracleConnect\obj\Debug\OracleConnect.RootWindow.resources
+C:\Users\51202_000\Documents\Visual Studio 2012\Projects\OracleConnect\OracleConnect\obj\Debug\OracleConnect.ListDialog.resources
+C:\Users\51202_000\Documents\Visual Studio 2012\Projects\OracleConnect\OracleConnect\obj\Debug\OracleConnect.Properties.Resources.resources
+C:\Users\51202_000\Documents\Visual Studio 2012\Projects\OracleConnect\OracleConnect\obj\Debug\OracleConnect.QueryForm.resources
+C:\Users\51202_000\Documents\Visual Studio 2012\Projects\OracleConnect\OracleConnect\obj\Debug\OracleConnect.SignIn.resources
+C:\Users\51202_000\Documents\Visual Studio 2012\Projects\OracleConnect\OracleConnect\obj\Debug\OracleConnect.csproj.GenerateResource.Cache
+C:\Users\51202_000\Documents\Visual Studio 2012\Projects\OracleConnect\OracleConnect\obj\Debug\Oracle SQL.exe
+C:\Users\51202_000\Documents\Visual Studio 2012\Projects\OracleConnect\OracleConnect\obj\Debug\Oracle SQL.pdb
