@@ -1,0 +1,31 @@
+﻿<Page x:Class="SaveAirPlane.View.DanhSachKhachHang"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="433" d:DesignWidth="681"
+	Title="DanhSachKhachHang" >
+
+    <Grid Style="{StaticResource ContentRoot}" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <ListView VerticalContentAlignment="Center" HorizontalContentAlignment="Left" x:Name="lstDanhSachKhachHang" HorizontalAlignment="Center" Height="309" Margin="10,70,0,0" VerticalAlignment="Center" Width="629" MinWidth="2">
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="demo" Click="MenuItem_OnClick"></MenuItem>
+                </ContextMenu>
+            </ListView.ContextMenu>
+            <ListView.View>
+                <GridView >
+                    <GridViewColumn Header="Mã số khách hàng" DisplayMemberBinding="{Binding MSKH}"/>
+                    <GridViewColumn Header="Họ Tên Khách Hàng" DisplayMemberBinding="{Binding HOTEN}"/>
+                    <GridViewColumn Header="Mã số chuyến bay" DisplayMemberBinding="{Binding MSCB}"/>
+                    <GridViewColumn Header="Số ghế" DisplayMemberBinding="{Binding MSGHE}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <TextBlock HorizontalAlignment="Left" Margin="55,10,0,0" TextWrapping="Wrap" Text="Mã số chuyến bay" VerticalAlignment="Top"/>
+        <ComboBox x:Name="cbxMSCB" HorizontalAlignment="Left" Margin="165,4,0,0" VerticalAlignment="Top" Width="120" Loaded="ComboBox_Loaded"/>
+        <Button Content="Xem" HorizontalAlignment="Left" Margin="310,0,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+
+    </Grid>
+</Page>

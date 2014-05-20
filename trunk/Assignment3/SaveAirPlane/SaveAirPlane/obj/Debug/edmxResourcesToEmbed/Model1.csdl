@@ -1,0 +1,668 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityType Name="BANGCAP">
+    <Key>
+      <PropertyRef Name="MSBC" />
+    </Key>
+    <Property Name="MSBC" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="TENBANGCAP" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TRUONGDAOTAO" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NAMDAT" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MSNV" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="NHANVIEN" Relationship="Self.BANGCAP_MSNV_FK" FromRole="BANGCAP" ToRole="NHANVIEN" />
+  </EntityType>
+  <EntityType Name="CALAMVIEC">
+    <Key>
+      <PropertyRef Name="MSCLV" />
+    </Key>
+    <Property Name="MSCLV" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TUGIO" Type="DateTime" Precision="6" Nullable="false" />
+    <Property Name="DENGIO" Type="DateTime" Precision="6" Nullable="false" />
+    <NavigationProperty Name="NVMATDAT_CALV" Relationship="Self.NHANVIENMD_CALV_MSCLV_FK" FromRole="CALAMVIEC" ToRole="NVMATDAT_CALV" />
+  </EntityType>
+  <EntityType Name="CHINHANH">
+    <Key>
+      <PropertyRef Name="MSCN" />
+    </Key>
+    <Property Name="MSCN" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="TENCHINHANH" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="THANHPHO" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="QUOCGIA" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="NHANVIENMDs" Relationship="Self.NHANVIENMD_MSCN_FK" FromRole="CHINHANH" ToRole="NHANVIENMD" />
+  </EntityType>
+  <EntityType Name="CHUYENBAY">
+    <Key>
+      <PropertyRef Name="MSCB" />
+    </Key>
+    <Property Name="MSCB" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TRANGTHAI" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SOGHETRONG" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="THOIDIEMDI" Type="DateTime" Nullable="false" />
+    <Property Name="THOIDIEMDEN" Type="DateTime" Nullable="false" />
+    <Property Name="MSMB" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MSTB" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <NavigationProperty Name="MAYBAY" Relationship="Self.CHUYENBAY_MSMB_FK" FromRole="CHUYENBAY" ToRole="MAYBAY" />
+    <NavigationProperty Name="TUYENBAY" Relationship="Self.CHUYENBAY_MSTB_FK" FromRole="CHUYENBAY" ToRole="TUYENBAY" />
+    <NavigationProperty Name="KHACHHANGs" Relationship="Self.KHACHHANG_MSCB_FK" FromRole="CHUYENBAY" ToRole="KHACHHANG" />
+    <NavigationProperty Name="THUCPHAMs" Relationship="Self.CHUYENBAYTHUCPHAM" FromRole="CHUYENBAY" ToRole="THUCPHAM" />
+    <NavigationProperty Name="NHANVIENs" Relationship="Self.KIEMTRA" FromRole="CHUYENBAY" ToRole="NHANVIEN" />
+    <NavigationProperty Name="NHANVIENs1" Relationship="Self.VANHANH" FromRole="CHUYENBAY" ToRole="NHANVIEN" />
+  </EntityType>
+  <EntityType Name="GA">
+    <Key>
+      <PropertyRef Name="MSGA" />
+    </Key>
+    <Property Name="MSGA" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="TENSB" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="THANHPHO" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="QUOCGIA" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="TUYENBAYs" Relationship="Self.TUYENBAY_MSGA_DEN_FK" FromRole="GA" ToRole="TUYENBAY" />
+    <NavigationProperty Name="TUYENBAYs1" Relationship="Self.TUYENBAY_MSGA_DI_FK" FromRole="GA" ToRole="TUYENBAY" />
+  </EntityType>
+  <EntityType Name="GHEKHACH">
+    <Key>
+      <PropertyRef Name="MSKH" />
+      <PropertyRef Name="GHESO" />
+    </Key>
+    <Property Name="MSKH" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="GHESO" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="GIA" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <NavigationProperty Name="KHACHHANG" Relationship="Self.GHEKHACH_MSKH_FK" FromRole="GHEKHACH" ToRole="KHACHHANG" />
+  </EntityType>
+  <EntityType Name="GIATHUCPHAM">
+    <Key>
+      <PropertyRef Name="MSGTP" />
+    </Key>
+    <Property Name="MSGTP" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="GIA" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="NGAYAPDUNG" Type="DateTime" Nullable="false" />
+    <Property Name="MSTP" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <NavigationProperty Name="THUCPHAM" Relationship="Self.GIATHUCPHAM_MSTP_FK" FromRole="GIATHUCPHAM" ToRole="THUCPHAM" />
+  </EntityType>
+  <EntityType Name="KHACHHANG">
+    <Key>
+      <PropertyRef Name="MSKH" />
+    </Key>
+    <Property Name="MSKH" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="HOTEN" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NGAYSINH" Type="DateTime" Nullable="false" />
+    <Property Name="GIOITINH" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="QUOCTICH" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SODT" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="DIACHI" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MSTTTG" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="MSPHH" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="MSCB" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="KHOILUONGVUOT" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <NavigationProperty Name="CHUYENBAY" Relationship="Self.KHACHHANG_MSCB_FK" FromRole="KHACHHANG" ToRole="CHUYENBAY" />
+    <NavigationProperty Name="GHEKHACHes" Relationship="Self.GHEKHACH_MSKH_FK" FromRole="KHACHHANG" ToRole="GHEKHACH" />
+    <NavigationProperty Name="PHIVCHH" Relationship="Self.KHACHHANG_MSPHH_FK" FromRole="KHACHHANG" ToRole="PHIVCHH" />
+    <NavigationProperty Name="TRANGTHAITG" Relationship="Self.KHACHHANG_MSTTTG_FK" FromRole="KHACHHANG" ToRole="TRANGTHAITG" />
+    <NavigationProperty Name="KHACHHANGNL" Relationship="Self.KHACHHANGNL_MSKH_FK" FromRole="KHACHHANG" ToRole="KHACHHANGNL" />
+    <NavigationProperty Name="KHACHHANGTEs" Relationship="Self.KHACHHANGTE_MSKH_FK" FromRole="KHACHHANG" ToRole="KHACHHANGTE" />
+  </EntityType>
+  <EntityType Name="KHACHHANGNL">
+    <Key>
+      <PropertyRef Name="MSKH" />
+    </Key>
+    <Property Name="MSKH" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CMND" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="PASSPORT" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="KHACHHANG" Relationship="Self.KHACHHANGNL_MSKH_FK" FromRole="KHACHHANGNL" ToRole="KHACHHANG" />
+  </EntityType>
+  <EntityType Name="LOAIMAYBAY">
+    <Key>
+      <PropertyRef Name="MSLMB" />
+    </Key>
+    <Property Name="MSLMB" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="HANGSX" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="MODEL_" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SOGHEVIP" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="SOGHEPT" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="TONGSOGHE" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <NavigationProperty Name="GHENGOIs" Relationship="Self.GHENGOI_MSLMB_FK" FromRole="LOAIMAYBAY" ToRole="GHENGOI" />
+    <NavigationProperty Name="MAYBAYs" Relationship="Self.MAYBAY_MSLMB_FK_FK" FromRole="LOAIMAYBAY" ToRole="MAYBAY" />
+    <NavigationProperty Name="NHANVIENs" Relationship="Self.CHUYENMONBD" FromRole="LOAIMAYBAY" ToRole="NHANVIEN" />
+    <NavigationProperty Name="NHANVIENs1" Relationship="Self.LAI" FromRole="LOAIMAYBAY" ToRole="NHANVIEN" />
+  </EntityType>
+  <EntityType Name="MAYBAY">
+    <Key>
+      <PropertyRef Name="MSMB" />
+    </Key>
+    <Property Name="MSMB" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TONGGIOBAY" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="NAMSX" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="THOIDIEMSD" Type="DateTime" Nullable="false" />
+    <Property Name="MSLMB" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="CHUYENBAYs" Relationship="Self.CHUYENBAY_MSMB_FK" FromRole="MAYBAY" ToRole="CHUYENBAY" />
+    <NavigationProperty Name="LOAIMAYBAY" Relationship="Self.MAYBAY_MSLMB_FK_FK" FromRole="MAYBAY" ToRole="LOAIMAYBAY" />
+  </EntityType>
+  <EntityType Name="NVMATDAT_CALV">
+    <Key>
+      <PropertyRef Name="MSNV" />
+      <PropertyRef Name="MSCLV" />
+    </Key>
+    <Property Name="MSNV" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MSCLV" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NGAYBATDAU" Type="DateTime" Nullable="false" />
+    <NavigationProperty Name="CALAMVIEC" Relationship="Self.NHANVIENMD_CALV_MSCLV_FK" FromRole="NVMATDAT_CALV" ToRole="CALAMVIEC" />
+    <NavigationProperty Name="NHANVIEN" Relationship="Self.NHANVIENMD_CALV_MSNV_FK" FromRole="NVMATDAT_CALV" ToRole="NHANVIEN" />
+  </EntityType>
+  <EntityType Name="NHANVIEN">
+    <Key>
+      <PropertyRef Name="MSNV" />
+    </Key>
+    <Property Name="MSNV" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="HOTEN" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NGAYSINH" Type="DateTime" Nullable="false" />
+    <Property Name="GIOITINH" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="QUOCTICH" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CMND" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PASSPORT" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="NGAYVAOLAM" Type="DateTime" Nullable="false" />
+    <Property Name="DIACHI" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SODT" Type="String" MaxLength="13" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TIENLUONG" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="BANGCAPs" Relationship="Self.BANGCAP_MSNV_FK" FromRole="NHANVIEN" ToRole="BANGCAP" />
+    <NavigationProperty Name="NVMATDAT_CALV" Relationship="Self.NHANVIENMD_CALV_MSNV_FK" FromRole="NHANVIEN" ToRole="NVMATDAT_CALV" />
+    <NavigationProperty Name="NHANVIENMD" Relationship="Self.NHANVIENMD_MSNV_FK" FromRole="NHANVIEN" ToRole="NHANVIENMD" />
+    <NavigationProperty Name="PHICONG" Relationship="Self.PHICONG_MSNV_FK" FromRole="NHANVIEN" ToRole="PHICONG" />
+    <NavigationProperty Name="TIEPVIEN" Relationship="Self.TIEPVIEN_MSNV_FK" FromRole="NHANVIEN" ToRole="TIEPVIEN" />
+    <NavigationProperty Name="LOAIMAYBAYs" Relationship="Self.CHUYENMONBD" FromRole="NHANVIEN" ToRole="LOAIMAYBAY" />
+    <NavigationProperty Name="CHUYENBAYs" Relationship="Self.KIEMTRA" FromRole="NHANVIEN" ToRole="CHUYENBAY" />
+    <NavigationProperty Name="LOAIMAYBAYs1" Relationship="Self.LAI" FromRole="NHANVIEN" ToRole="LOAIMAYBAY" />
+    <NavigationProperty Name="CHUYENBAYs1" Relationship="Self.VANHANH" FromRole="NHANVIEN" ToRole="CHUYENBAY" />
+  </EntityType>
+  <EntityType Name="NHANVIENMD">
+    <Key>
+      <PropertyRef Name="MSNV" />
+    </Key>
+    <Property Name="MSNV" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MSCN" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="MSNV_TRUONG" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="CHINHANH" Relationship="Self.NHANVIENMD_MSCN_FK" FromRole="NHANVIENMD" ToRole="CHINHANH" />
+    <NavigationProperty Name="NHANVIEN" Relationship="Self.NHANVIENMD_MSNV_FK" FromRole="NHANVIENMD" ToRole="NHANVIEN" />
+    <NavigationProperty Name="NHANVIENMD1" Relationship="Self.NHANVIENMD_MSNV_TRUONG_FK" FromRole="NHANVIENMD" ToRole="NHANVIENMD1" />
+    <NavigationProperty Name="NHANVIENMD2" Relationship="Self.NHANVIENMD_MSNV_TRUONG_FK" FromRole="NHANVIENMD1" ToRole="NHANVIENMD" />
+  </EntityType>
+  <EntityType Name="PHICONG">
+    <Key>
+      <PropertyRef Name="MSNV" />
+    </Key>
+    <Property Name="MSNV" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LOAIPHICONG" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="NHANVIEN" Relationship="Self.PHICONG_MSNV_FK" FromRole="PHICONG" ToRole="NHANVIEN" />
+  </EntityType>
+  <EntityType Name="PHIVCHH">
+    <Key>
+      <PropertyRef Name="MSPHH" />
+    </Key>
+    <Property Name="MSPHH" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="LOAIVE" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TRONGLUONGDM" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="DONGIA_KG" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="THOIDIEMAPDUNG" Type="DateTime" Nullable="false" />
+    <NavigationProperty Name="KHACHHANGs" Relationship="Self.KHACHHANG_MSPHH_FK" FromRole="PHIVCHH" ToRole="KHACHHANG" />
+  </EntityType>
+  <EntityType Name="TIEPVIEN">
+    <Key>
+      <PropertyRef Name="MSNV" />
+    </Key>
+    <Property Name="MSNV" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NGOAINGUTHONGTHAO" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="NHANVIEN" Relationship="Self.TIEPVIEN_MSNV_FK" FromRole="TIEPVIEN" ToRole="NHANVIEN" />
+  </EntityType>
+  <EntityType Name="TUYENBAY">
+    <Key>
+      <PropertyRef Name="MSTB" />
+    </Key>
+    <Property Name="MSTB" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="MSG_DI" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="MSG_DEN" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <NavigationProperty Name="CHUYENBAYs" Relationship="Self.CHUYENBAY_MSTB_FK" FromRole="TUYENBAY" ToRole="CHUYENBAY" />
+    <NavigationProperty Name="GA" Relationship="Self.TUYENBAY_MSGA_DEN_FK" FromRole="TUYENBAY" ToRole="GA" />
+    <NavigationProperty Name="GA1" Relationship="Self.TUYENBAY_MSGA_DI_FK" FromRole="TUYENBAY" ToRole="GA" />
+  </EntityType>
+  <EntityType Name="THUCPHAM">
+    <Key>
+      <PropertyRef Name="MSTP" />
+    </Key>
+    <Property Name="MSTP" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="TEN" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MOTA" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="GIATHUCPHAMs" Relationship="Self.GIATHUCPHAM_MSTP_FK" FromRole="THUCPHAM" ToRole="GIATHUCPHAM" />
+    <NavigationProperty Name="CHUYENBAYs" Relationship="Self.CHUYENBAYTHUCPHAM" FromRole="THUCPHAM" ToRole="CHUYENBAY" />
+  </EntityType>
+  <EntityType Name="TRANGTHAITG">
+    <Key>
+      <PropertyRef Name="MSTTTG" />
+    </Key>
+    <Property Name="MSTTTG" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="TENTT" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PHANTRAMTP" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <NavigationProperty Name="KHACHHANGs" Relationship="Self.KHACHHANG_MSTTTG_FK" FromRole="TRANGTHAITG" ToRole="KHACHHANG" />
+  </EntityType>
+  <EntityType Name="GHENGOI">
+    <Key>
+      <PropertyRef Name="MSG" />
+      <PropertyRef Name="GHESO" />
+      <PropertyRef Name="LOAIGHE" />
+      <PropertyRef Name="MSLMB" />
+    </Key>
+    <Property Name="MSG" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="GHESO" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LOAIGHE" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MSLMB" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="LOAIMAYBAY" Relationship="Self.GHENGOI_MSLMB_FK" FromRole="GHENGOI" ToRole="LOAIMAYBAY" />
+  </EntityType>
+  <EntityType Name="KHACHHANGTE">
+    <Key>
+      <PropertyRef Name="MSKH" />
+      <PropertyRef Name="MSNGH" />
+    </Key>
+    <Property Name="MSKH" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MSNGH" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="THONGTINKSINH" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="KHACHHANG" Relationship="Self.KHACHHANGTE_MSKH_FK" FromRole="KHACHHANGTE" ToRole="KHACHHANG" />
+  </EntityType>
+  <Association Name="BANGCAP_MSNV_FK">
+    <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1" />
+    <End Role="BANGCAP" Type="Self.BANGCAP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NHANVIEN">
+        <PropertyRef Name="MSNV" />
+      </Principal>
+      <Dependent Role="BANGCAP">
+        <PropertyRef Name="MSNV" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="NHANVIENMD_CALV_MSCLV_FK">
+    <End Role="CALAMVIEC" Type="Self.CALAMVIEC" Multiplicity="1" />
+    <End Role="NVMATDAT_CALV" Type="Self.NVMATDAT_CALV" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CALAMVIEC">
+        <PropertyRef Name="MSCLV" />
+      </Principal>
+      <Dependent Role="NVMATDAT_CALV">
+        <PropertyRef Name="MSCLV" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="NHANVIENMD_MSCN_FK">
+    <End Role="CHINHANH" Type="Self.CHINHANH" Multiplicity="1" />
+    <End Role="NHANVIENMD" Type="Self.NHANVIENMD" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CHINHANH">
+        <PropertyRef Name="MSCN" />
+      </Principal>
+      <Dependent Role="NHANVIENMD">
+        <PropertyRef Name="MSCN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CHUYENBAY_MSMB_FK">
+    <End Role="MAYBAY" Type="Self.MAYBAY" Multiplicity="1" />
+    <End Role="CHUYENBAY" Type="Self.CHUYENBAY" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MAYBAY">
+        <PropertyRef Name="MSMB" />
+      </Principal>
+      <Dependent Role="CHUYENBAY">
+        <PropertyRef Name="MSMB" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CHUYENBAY_MSTB_FK">
+    <End Role="TUYENBAY" Type="Self.TUYENBAY" Multiplicity="1" />
+    <End Role="CHUYENBAY" Type="Self.CHUYENBAY" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TUYENBAY">
+        <PropertyRef Name="MSTB" />
+      </Principal>
+      <Dependent Role="CHUYENBAY">
+        <PropertyRef Name="MSTB" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="KHACHHANG_MSCB_FK">
+    <End Role="CHUYENBAY" Type="Self.CHUYENBAY" Multiplicity="1" />
+    <End Role="KHACHHANG" Type="Self.KHACHHANG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CHUYENBAY">
+        <PropertyRef Name="MSCB" />
+      </Principal>
+      <Dependent Role="KHACHHANG">
+        <PropertyRef Name="MSCB" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TUYENBAY_MSGA_DEN_FK">
+    <End Role="GA" Type="Self.GA" Multiplicity="1" />
+    <End Role="TUYENBAY" Type="Self.TUYENBAY" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GA">
+        <PropertyRef Name="MSGA" />
+      </Principal>
+      <Dependent Role="TUYENBAY">
+        <PropertyRef Name="MSG_DEN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TUYENBAY_MSGA_DI_FK">
+    <End Role="GA" Type="Self.GA" Multiplicity="1" />
+    <End Role="TUYENBAY" Type="Self.TUYENBAY" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GA">
+        <PropertyRef Name="MSGA" />
+      </Principal>
+      <Dependent Role="TUYENBAY">
+        <PropertyRef Name="MSG_DI" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="GHEKHACH_MSKH_FK">
+    <End Role="KHACHHANG" Type="Self.KHACHHANG" Multiplicity="1" />
+    <End Role="GHEKHACH" Type="Self.GHEKHACH" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KHACHHANG">
+        <PropertyRef Name="MSKH" />
+      </Principal>
+      <Dependent Role="GHEKHACH">
+        <PropertyRef Name="MSKH" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="GIATHUCPHAM_MSTP_FK">
+    <End Role="THUCPHAM" Type="Self.THUCPHAM" Multiplicity="1" />
+    <End Role="GIATHUCPHAM" Type="Self.GIATHUCPHAM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="THUCPHAM">
+        <PropertyRef Name="MSTP" />
+      </Principal>
+      <Dependent Role="GIATHUCPHAM">
+        <PropertyRef Name="MSTP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="KHACHHANG_MSPHH_FK">
+    <End Role="PHIVCHH" Type="Self.PHIVCHH" Multiplicity="1" />
+    <End Role="KHACHHANG" Type="Self.KHACHHANG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PHIVCHH">
+        <PropertyRef Name="MSPHH" />
+      </Principal>
+      <Dependent Role="KHACHHANG">
+        <PropertyRef Name="MSPHH" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="KHACHHANG_MSTTTG_FK">
+    <End Role="TRANGTHAITG" Type="Self.TRANGTHAITG" Multiplicity="1" />
+    <End Role="KHACHHANG" Type="Self.KHACHHANG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TRANGTHAITG">
+        <PropertyRef Name="MSTTTG" />
+      </Principal>
+      <Dependent Role="KHACHHANG">
+        <PropertyRef Name="MSTTTG" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="KHACHHANGNL_MSKH_FK">
+    <End Role="KHACHHANG" Type="Self.KHACHHANG" Multiplicity="1" />
+    <End Role="KHACHHANGNL" Type="Self.KHACHHANGNL" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="KHACHHANG">
+        <PropertyRef Name="MSKH" />
+      </Principal>
+      <Dependent Role="KHACHHANGNL">
+        <PropertyRef Name="MSKH" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="KHACHHANGTE_MSKH_FK">
+    <End Role="KHACHHANG" Type="Self.KHACHHANG" Multiplicity="1" />
+    <End Role="KHACHHANGTE" Type="Self.KHACHHANGTE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KHACHHANG">
+        <PropertyRef Name="MSKH" />
+      </Principal>
+      <Dependent Role="KHACHHANGTE">
+        <PropertyRef Name="MSKH" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="GHENGOI_MSLMB_FK">
+    <End Role="LOAIMAYBAY" Type="Self.LOAIMAYBAY" Multiplicity="1" />
+    <End Role="GHENGOI" Type="Self.GHENGOI" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LOAIMAYBAY">
+        <PropertyRef Name="MSLMB" />
+      </Principal>
+      <Dependent Role="GHENGOI">
+        <PropertyRef Name="MSLMB" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MAYBAY_MSLMB_FK_FK">
+    <End Role="LOAIMAYBAY" Type="Self.LOAIMAYBAY" Multiplicity="1" />
+    <End Role="MAYBAY" Type="Self.MAYBAY" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LOAIMAYBAY">
+        <PropertyRef Name="MSLMB" />
+      </Principal>
+      <Dependent Role="MAYBAY">
+        <PropertyRef Name="MSLMB" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="NHANVIENMD_CALV_MSNV_FK">
+    <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1" />
+    <End Role="NVMATDAT_CALV" Type="Self.NVMATDAT_CALV" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NHANVIEN">
+        <PropertyRef Name="MSNV" />
+      </Principal>
+      <Dependent Role="NVMATDAT_CALV">
+        <PropertyRef Name="MSNV" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="NHANVIENMD_MSNV_FK">
+    <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1" />
+    <End Role="NHANVIENMD" Type="Self.NHANVIENMD" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="NHANVIEN">
+        <PropertyRef Name="MSNV" />
+      </Principal>
+      <Dependent Role="NHANVIENMD">
+        <PropertyRef Name="MSNV" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PHICONG_MSNV_FK">
+    <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1" />
+    <End Role="PHICONG" Type="Self.PHICONG" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="NHANVIEN">
+        <PropertyRef Name="MSNV" />
+      </Principal>
+      <Dependent Role="PHICONG">
+        <PropertyRef Name="MSNV" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TIEPVIEN_MSNV_FK">
+    <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1" />
+    <End Role="TIEPVIEN" Type="Self.TIEPVIEN" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="NHANVIEN">
+        <PropertyRef Name="MSNV" />
+      </Principal>
+      <Dependent Role="TIEPVIEN">
+        <PropertyRef Name="MSNV" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="NHANVIENMD_MSNV_TRUONG_FK">
+    <End Role="NHANVIENMD" Type="Self.NHANVIENMD" Multiplicity="1" />
+    <End Role="NHANVIENMD1" Type="Self.NHANVIENMD" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NHANVIENMD">
+        <PropertyRef Name="MSNV" />
+      </Principal>
+      <Dependent Role="NHANVIENMD1">
+        <PropertyRef Name="MSNV_TRUONG" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CHUYENBAYTHUCPHAM">
+    <End Role="CHUYENBAY" Type="Self.CHUYENBAY" Multiplicity="*" />
+    <End Role="THUCPHAM" Type="Self.THUCPHAM" Multiplicity="*" />
+  </Association>
+  <Association Name="CHUYENMONBD">
+    <End Role="LOAIMAYBAY" Type="Self.LOAIMAYBAY" Multiplicity="*" />
+    <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="*" />
+  </Association>
+  <Association Name="KIEMTRA">
+    <End Role="CHUYENBAY" Type="Self.CHUYENBAY" Multiplicity="*" />
+    <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="*" />
+  </Association>
+  <Association Name="LAI">
+    <End Role="LOAIMAYBAY" Type="Self.LOAIMAYBAY" Multiplicity="*" />
+    <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="*" />
+  </Association>
+  <Association Name="VANHANH">
+    <End Role="CHUYENBAY" Type="Self.CHUYENBAY" Multiplicity="*" />
+    <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="Entities2" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="BANGCAPs" EntityType="Self.BANGCAP" />
+    <EntitySet Name="CALAMVIECs" EntityType="Self.CALAMVIEC" />
+    <EntitySet Name="CHINHANHs" EntityType="Self.CHINHANH" />
+    <EntitySet Name="CHUYENBAYs" EntityType="Self.CHUYENBAY" />
+    <EntitySet Name="GAs" EntityType="Self.GA" />
+    <EntitySet Name="GHEKHACHes" EntityType="Self.GHEKHACH" />
+    <EntitySet Name="GIATHUCPHAMs" EntityType="Self.GIATHUCPHAM" />
+    <EntitySet Name="KHACHHANGs" EntityType="Self.KHACHHANG" />
+    <EntitySet Name="KHACHHANGNLs" EntityType="Self.KHACHHANGNL" />
+    <EntitySet Name="LOAIMAYBAYs" EntityType="Self.LOAIMAYBAY" />
+    <EntitySet Name="MAYBAYs" EntityType="Self.MAYBAY" />
+    <EntitySet Name="NVMATDAT_CALV" EntityType="Self.NVMATDAT_CALV" />
+    <EntitySet Name="NHANVIENs" EntityType="Self.NHANVIEN" />
+    <EntitySet Name="NHANVIENMDs" EntityType="Self.NHANVIENMD" />
+    <EntitySet Name="PHICONGs" EntityType="Self.PHICONG" />
+    <EntitySet Name="PHIVCHHs" EntityType="Self.PHIVCHH" />
+    <EntitySet Name="TIEPVIENs" EntityType="Self.TIEPVIEN" />
+    <EntitySet Name="TUYENBAYs" EntityType="Self.TUYENBAY" />
+    <EntitySet Name="THUCPHAMs" EntityType="Self.THUCPHAM" />
+    <EntitySet Name="TRANGTHAITGs" EntityType="Self.TRANGTHAITG" />
+    <EntitySet Name="GHENGOIs" EntityType="Self.GHENGOI" />
+    <EntitySet Name="KHACHHANGTEs" EntityType="Self.KHACHHANGTE" />
+    <AssociationSet Name="BANGCAP_MSNV_FK" Association="Self.BANGCAP_MSNV_FK">
+      <End Role="NHANVIEN" EntitySet="NHANVIENs" />
+      <End Role="BANGCAP" EntitySet="BANGCAPs" />
+    </AssociationSet>
+    <AssociationSet Name="NHANVIENMD_CALV_MSCLV_FK" Association="Self.NHANVIENMD_CALV_MSCLV_FK">
+      <End Role="CALAMVIEC" EntitySet="CALAMVIECs" />
+      <End Role="NVMATDAT_CALV" EntitySet="NVMATDAT_CALV" />
+    </AssociationSet>
+    <AssociationSet Name="NHANVIENMD_MSCN_FK" Association="Self.NHANVIENMD_MSCN_FK">
+      <End Role="CHINHANH" EntitySet="CHINHANHs" />
+      <End Role="NHANVIENMD" EntitySet="NHANVIENMDs" />
+    </AssociationSet>
+    <AssociationSet Name="CHUYENBAY_MSMB_FK" Association="Self.CHUYENBAY_MSMB_FK">
+      <End Role="MAYBAY" EntitySet="MAYBAYs" />
+      <End Role="CHUYENBAY" EntitySet="CHUYENBAYs" />
+    </AssociationSet>
+    <AssociationSet Name="CHUYENBAY_MSTB_FK" Association="Self.CHUYENBAY_MSTB_FK">
+      <End Role="TUYENBAY" EntitySet="TUYENBAYs" />
+      <End Role="CHUYENBAY" EntitySet="CHUYENBAYs" />
+    </AssociationSet>
+    <AssociationSet Name="KHACHHANG_MSCB_FK" Association="Self.KHACHHANG_MSCB_FK">
+      <End Role="CHUYENBAY" EntitySet="CHUYENBAYs" />
+      <End Role="KHACHHANG" EntitySet="KHACHHANGs" />
+    </AssociationSet>
+    <AssociationSet Name="TUYENBAY_MSGA_DEN_FK" Association="Self.TUYENBAY_MSGA_DEN_FK">
+      <End Role="GA" EntitySet="GAs" />
+      <End Role="TUYENBAY" EntitySet="TUYENBAYs" />
+    </AssociationSet>
+    <AssociationSet Name="TUYENBAY_MSGA_DI_FK" Association="Self.TUYENBAY_MSGA_DI_FK">
+      <End Role="GA" EntitySet="GAs" />
+      <End Role="TUYENBAY" EntitySet="TUYENBAYs" />
+    </AssociationSet>
+    <AssociationSet Name="GHEKHACH_MSKH_FK" Association="Self.GHEKHACH_MSKH_FK">
+      <End Role="KHACHHANG" EntitySet="KHACHHANGs" />
+      <End Role="GHEKHACH" EntitySet="GHEKHACHes" />
+    </AssociationSet>
+    <AssociationSet Name="GIATHUCPHAM_MSTP_FK" Association="Self.GIATHUCPHAM_MSTP_FK">
+      <End Role="THUCPHAM" EntitySet="THUCPHAMs" />
+      <End Role="GIATHUCPHAM" EntitySet="GIATHUCPHAMs" />
+    </AssociationSet>
+    <AssociationSet Name="KHACHHANG_MSPHH_FK" Association="Self.KHACHHANG_MSPHH_FK">
+      <End Role="PHIVCHH" EntitySet="PHIVCHHs" />
+      <End Role="KHACHHANG" EntitySet="KHACHHANGs" />
+    </AssociationSet>
+    <AssociationSet Name="KHACHHANG_MSTTTG_FK" Association="Self.KHACHHANG_MSTTTG_FK">
+      <End Role="TRANGTHAITG" EntitySet="TRANGTHAITGs" />
+      <End Role="KHACHHANG" EntitySet="KHACHHANGs" />
+    </AssociationSet>
+    <AssociationSet Name="KHACHHANGNL_MSKH_FK" Association="Self.KHACHHANGNL_MSKH_FK">
+      <End Role="KHACHHANG" EntitySet="KHACHHANGs" />
+      <End Role="KHACHHANGNL" EntitySet="KHACHHANGNLs" />
+    </AssociationSet>
+    <AssociationSet Name="KHACHHANGTE_MSKH_FK" Association="Self.KHACHHANGTE_MSKH_FK">
+      <End Role="KHACHHANG" EntitySet="KHACHHANGs" />
+      <End Role="KHACHHANGTE" EntitySet="KHACHHANGTEs" />
+    </AssociationSet>
+    <AssociationSet Name="GHENGOI_MSLMB_FK" Association="Self.GHENGOI_MSLMB_FK">
+      <End Role="LOAIMAYBAY" EntitySet="LOAIMAYBAYs" />
+      <End Role="GHENGOI" EntitySet="GHENGOIs" />
+    </AssociationSet>
+    <AssociationSet Name="MAYBAY_MSLMB_FK_FK" Association="Self.MAYBAY_MSLMB_FK_FK">
+      <End Role="LOAIMAYBAY" EntitySet="LOAIMAYBAYs" />
+      <End Role="MAYBAY" EntitySet="MAYBAYs" />
+    </AssociationSet>
+    <AssociationSet Name="NHANVIENMD_CALV_MSNV_FK" Association="Self.NHANVIENMD_CALV_MSNV_FK">
+      <End Role="NHANVIEN" EntitySet="NHANVIENs" />
+      <End Role="NVMATDAT_CALV" EntitySet="NVMATDAT_CALV" />
+    </AssociationSet>
+    <AssociationSet Name="NHANVIENMD_MSNV_FK" Association="Self.NHANVIENMD_MSNV_FK">
+      <End Role="NHANVIEN" EntitySet="NHANVIENs" />
+      <End Role="NHANVIENMD" EntitySet="NHANVIENMDs" />
+    </AssociationSet>
+    <AssociationSet Name="PHICONG_MSNV_FK" Association="Self.PHICONG_MSNV_FK">
+      <End Role="NHANVIEN" EntitySet="NHANVIENs" />
+      <End Role="PHICONG" EntitySet="PHICONGs" />
+    </AssociationSet>
+    <AssociationSet Name="TIEPVIEN_MSNV_FK" Association="Self.TIEPVIEN_MSNV_FK">
+      <End Role="NHANVIEN" EntitySet="NHANVIENs" />
+      <End Role="TIEPVIEN" EntitySet="TIEPVIENs" />
+    </AssociationSet>
+    <AssociationSet Name="NHANVIENMD_MSNV_TRUONG_FK" Association="Self.NHANVIENMD_MSNV_TRUONG_FK">
+      <End Role="NHANVIENMD" EntitySet="NHANVIENMDs" />
+      <End Role="NHANVIENMD1" EntitySet="NHANVIENMDs" />
+    </AssociationSet>
+    <AssociationSet Name="CHUYENBAYTHUCPHAM" Association="Self.CHUYENBAYTHUCPHAM">
+      <End Role="CHUYENBAY" EntitySet="CHUYENBAYs" />
+      <End Role="THUCPHAM" EntitySet="THUCPHAMs" />
+    </AssociationSet>
+    <AssociationSet Name="CHUYENMONBD" Association="Self.CHUYENMONBD">
+      <End Role="LOAIMAYBAY" EntitySet="LOAIMAYBAYs" />
+      <End Role="NHANVIEN" EntitySet="NHANVIENs" />
+    </AssociationSet>
+    <AssociationSet Name="KIEMTRA" Association="Self.KIEMTRA">
+      <End Role="CHUYENBAY" EntitySet="CHUYENBAYs" />
+      <End Role="NHANVIEN" EntitySet="NHANVIENs" />
+    </AssociationSet>
+    <AssociationSet Name="LAI" Association="Self.LAI">
+      <End Role="LOAIMAYBAY" EntitySet="LOAIMAYBAYs" />
+      <End Role="NHANVIEN" EntitySet="NHANVIENs" />
+    </AssociationSet>
+    <AssociationSet Name="VANHANH" Association="Self.VANHANH">
+      <End Role="CHUYENBAY" EntitySet="CHUYENBAYs" />
+      <End Role="NHANVIEN" EntitySet="NHANVIENs" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
