@@ -22,5 +22,3 @@ C:\Users\51202_000\Desktop\DBS Assignment 2\Assignment3\SaveAirPlane\SaveAirPlan
 C:\Users\51202_000\Desktop\DBS Assignment 2\Assignment3\SaveAirPlane\SaveAirPlane\obj\Debug\View\DanhSachKhachHang.g.cs
 C:\Users\51202_000\Desktop\DBS Assignment 2\Assignment3\SaveAirPlane\SaveAirPlane\obj\Debug\View\ThongTinKhachHang.baml
 C:\Users\51202_000\Desktop\DBS Assignment 2\Assignment3\SaveAirPlane\SaveAirPlane\obj\Debug\View\ThongTinKhachHang.g.cs
-C:\Users\51202_000\Desktop\DBS Assignment 2\Assignment3\SaveAirPlane\SaveAirPlane\obj\Debug\login.baml
-C:\Users\51202_000\Desktop\DBS Assignment 2\Assignment3\SaveAirPlane\SaveAirPlane\obj\Debug\login.g.cs
