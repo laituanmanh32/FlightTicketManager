@@ -21,6 +21,8 @@ namespace OracleConnect
             da = new OracleDataAdapter(cmd);
             cb = new OracleCommandBuilder(da);
             ds = new DataSet();
+
+            da.TableMappings.Add("table", "KhachHang");
         }
 
         public DataSet DataSet
