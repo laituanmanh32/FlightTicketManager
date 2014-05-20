@@ -14,9 +14,12 @@ namespace SaveAirPlane.ViewModel
 
         private NhanVienViewModel()
         {
-            string loginString = "user id=C##NhanVien"
-                                 + ";password=123456"
-                                 + ";data source=orcl";
+            
+            login log = new login();
+            log.ShowDialog();
+            string loginString = "user id="+log.txtuser.Text
+                                 + ";password=" + log.txtpass.Text
+                                 + ";data source=" + log.txtSource.Text;
             if (da.Connect(loginString))
                 mNhanVien = new NhanVienDataContext();
             else
