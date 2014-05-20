@@ -1,0 +1,274 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities2">
+    <EntitySetMapping Name="BANGCAPs">
+      <EntityTypeMapping TypeName="Model.BANGCAP">
+        <MappingFragment StoreEntitySet="BANGCAP">
+          <ScalarProperty Name="MSBC" ColumnName="MSBC" />
+          <ScalarProperty Name="TENBANGCAP" ColumnName="TENBANGCAP" />
+          <ScalarProperty Name="TRUONGDAOTAO" ColumnName="TRUONGDAOTAO" />
+          <ScalarProperty Name="NAMDAT" ColumnName="NAMDAT" />
+          <ScalarProperty Name="MSNV" ColumnName="MSNV" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CALAMVIECs">
+      <EntityTypeMapping TypeName="Model.CALAMVIEC">
+        <MappingFragment StoreEntitySet="CALAMVIEC">
+          <ScalarProperty Name="MSCLV" ColumnName="MSCLV" />
+          <ScalarProperty Name="TUGIO" ColumnName="TUGIO" />
+          <ScalarProperty Name="DENGIO" ColumnName="DENGIO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CHINHANHs">
+      <EntityTypeMapping TypeName="Model.CHINHANH">
+        <MappingFragment StoreEntitySet="CHINHANH">
+          <ScalarProperty Name="MSCN" ColumnName="MSCN" />
+          <ScalarProperty Name="TENCHINHANH" ColumnName="TENCHINHANH" />
+          <ScalarProperty Name="THANHPHO" ColumnName="THANHPHO" />
+          <ScalarProperty Name="QUOCGIA" ColumnName="QUOCGIA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CHUYENBAYs">
+      <EntityTypeMapping TypeName="Model.CHUYENBAY">
+        <MappingFragment StoreEntitySet="CHUYENBAY">
+          <ScalarProperty Name="MSCB" ColumnName="MSCB" />
+          <ScalarProperty Name="TRANGTHAI" ColumnName="TRANGTHAI" />
+          <ScalarProperty Name="SOGHETRONG" ColumnName="SOGHETRONG" />
+          <ScalarProperty Name="THOIDIEMDI" ColumnName="THOIDIEMDI" />
+          <ScalarProperty Name="THOIDIEMDEN" ColumnName="THOIDIEMDEN" />
+          <ScalarProperty Name="MSMB" ColumnName="MSMB" />
+          <ScalarProperty Name="MSTB" ColumnName="MSTB" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GAs">
+      <EntityTypeMapping TypeName="Model.GA">
+        <MappingFragment StoreEntitySet="GA">
+          <ScalarProperty Name="MSGA" ColumnName="MSGA" />
+          <ScalarProperty Name="TENSB" ColumnName="TENSB" />
+          <ScalarProperty Name="THANHPHO" ColumnName="THANHPHO" />
+          <ScalarProperty Name="QUOCGIA" ColumnName="QUOCGIA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GHEKHACHes">
+      <EntityTypeMapping TypeName="Model.GHEKHACH">
+        <MappingFragment StoreEntitySet="GHEKHACH">
+          <ScalarProperty Name="MSKH" ColumnName="MSKH" />
+          <ScalarProperty Name="GHESO" ColumnName="GHESO" />
+          <ScalarProperty Name="GIA" ColumnName="GIA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GIATHUCPHAMs">
+      <EntityTypeMapping TypeName="Model.GIATHUCPHAM">
+        <MappingFragment StoreEntitySet="GIATHUCPHAM">
+          <ScalarProperty Name="MSGTP" ColumnName="MSGTP" />
+          <ScalarProperty Name="GIA" ColumnName="GIA" />
+          <ScalarProperty Name="NGAYAPDUNG" ColumnName="NGAYAPDUNG" />
+          <ScalarProperty Name="MSTP" ColumnName="MSTP" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="KHACHHANGs">
+      <EntityTypeMapping TypeName="Model.KHACHHANG">
+        <MappingFragment StoreEntitySet="KHACHHANG">
+          <ScalarProperty Name="MSKH" ColumnName="MSKH" />
+          <ScalarProperty Name="HOTEN" ColumnName="HOTEN" />
+          <ScalarProperty Name="NGAYSINH" ColumnName="NGAYSINH" />
+          <ScalarProperty Name="GIOITINH" ColumnName="GIOITINH" />
+          <ScalarProperty Name="QUOCTICH" ColumnName="QUOCTICH" />
+          <ScalarProperty Name="SODT" ColumnName="SODT" />
+          <ScalarProperty Name="DIACHI" ColumnName="DIACHI" />
+          <ScalarProperty Name="MSTTTG" ColumnName="MSTTTG" />
+          <ScalarProperty Name="MSPHH" ColumnName="MSPHH" />
+          <ScalarProperty Name="MSCB" ColumnName="MSCB" />
+          <ScalarProperty Name="KHOILUONGVUOT" ColumnName="KHOILUONGVUOT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="KHACHHANGNLs">
+      <EntityTypeMapping TypeName="Model.KHACHHANGNL">
+        <MappingFragment StoreEntitySet="KHACHHANGNL">
+          <ScalarProperty Name="MSKH" ColumnName="MSKH" />
+          <ScalarProperty Name="CMND" ColumnName="CMND" />
+          <ScalarProperty Name="PASSPORT" ColumnName="PASSPORT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LOAIMAYBAYs">
+      <EntityTypeMapping TypeName="Model.LOAIMAYBAY">
+        <MappingFragment StoreEntitySet="LOAIMAYBAY">
+          <ScalarProperty Name="MSLMB" ColumnName="MSLMB" />
+          <ScalarProperty Name="HANGSX" ColumnName="HANGSX" />
+          <ScalarProperty Name="MODEL_" ColumnName="MODEL_" />
+          <ScalarProperty Name="SOGHEVIP" ColumnName="SOGHEVIP" />
+          <ScalarProperty Name="SOGHEPT" ColumnName="SOGHEPT" />
+          <ScalarProperty Name="TONGSOGHE" ColumnName="TONGSOGHE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MAYBAYs">
+      <EntityTypeMapping TypeName="Model.MAYBAY">
+        <MappingFragment StoreEntitySet="MAYBAY">
+          <ScalarProperty Name="MSMB" ColumnName="MSMB" />
+          <ScalarProperty Name="TONGGIOBAY" ColumnName="TONGGIOBAY" />
+          <ScalarProperty Name="NAMSX" ColumnName="NAMSX" />
+          <ScalarProperty Name="THOIDIEMSD" ColumnName="THOIDIEMSD" />
+          <ScalarProperty Name="MSLMB" ColumnName="MSLMB" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NVMATDAT_CALV">
+      <EntityTypeMapping TypeName="Model.NVMATDAT_CALV">
+        <MappingFragment StoreEntitySet="NVMATDAT_CALV">
+          <ScalarProperty Name="MSNV" ColumnName="MSNV" />
+          <ScalarProperty Name="MSCLV" ColumnName="MSCLV" />
+          <ScalarProperty Name="NGAYBATDAU" ColumnName="NGAYBATDAU" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NHANVIENs">
+      <EntityTypeMapping TypeName="Model.NHANVIEN">
+        <MappingFragment StoreEntitySet="NHANVIEN">
+          <ScalarProperty Name="MSNV" ColumnName="MSNV" />
+          <ScalarProperty Name="HOTEN" ColumnName="HOTEN" />
+          <ScalarProperty Name="NGAYSINH" ColumnName="NGAYSINH" />
+          <ScalarProperty Name="GIOITINH" ColumnName="GIOITINH" />
+          <ScalarProperty Name="QUOCTICH" ColumnName="QUOCTICH" />
+          <ScalarProperty Name="CMND" ColumnName="CMND" />
+          <ScalarProperty Name="PASSPORT" ColumnName="PASSPORT" />
+          <ScalarProperty Name="NGAYVAOLAM" ColumnName="NGAYVAOLAM" />
+          <ScalarProperty Name="DIACHI" ColumnName="DIACHI" />
+          <ScalarProperty Name="SODT" ColumnName="SODT" />
+          <ScalarProperty Name="TIENLUONG" ColumnName="TIENLUONG" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NHANVIENMDs">
+      <EntityTypeMapping TypeName="Model.NHANVIENMD">
+        <MappingFragment StoreEntitySet="NHANVIENMD">
+          <ScalarProperty Name="MSNV" ColumnName="MSNV" />
+          <ScalarProperty Name="MSCN" ColumnName="MSCN" />
+          <ScalarProperty Name="MSNV_TRUONG" ColumnName="MSNV_TRUONG" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PHICONGs">
+      <EntityTypeMapping TypeName="Model.PHICONG">
+        <MappingFragment StoreEntitySet="PHICONG">
+          <ScalarProperty Name="MSNV" ColumnName="MSNV" />
+          <ScalarProperty Name="LOAIPHICONG" ColumnName="LOAIPHICONG" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PHIVCHHs">
+      <EntityTypeMapping TypeName="Model.PHIVCHH">
+        <MappingFragment StoreEntitySet="PHIVCHH">
+          <ScalarProperty Name="MSPHH" ColumnName="MSPHH" />
+          <ScalarProperty Name="LOAIVE" ColumnName="LOAIVE" />
+          <ScalarProperty Name="TRONGLUONGDM" ColumnName="TRONGLUONGDM" />
+          <ScalarProperty Name="DONGIA_KG" ColumnName="DONGIA_KG" />
+          <ScalarProperty Name="THOIDIEMAPDUNG" ColumnName="THOIDIEMAPDUNG" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TIEPVIENs">
+      <EntityTypeMapping TypeName="Model.TIEPVIEN">
+        <MappingFragment StoreEntitySet="TIEPVIEN">
+          <ScalarProperty Name="MSNV" ColumnName="MSNV" />
+          <ScalarProperty Name="NGOAINGUTHONGTHAO" ColumnName="NGOAINGUTHONGTHAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TUYENBAYs">
+      <EntityTypeMapping TypeName="Model.TUYENBAY">
+        <MappingFragment StoreEntitySet="TUYENBAY">
+          <ScalarProperty Name="MSTB" ColumnName="MSTB" />
+          <ScalarProperty Name="MSG_DI" ColumnName="MSG_DI" />
+          <ScalarProperty Name="MSG_DEN" ColumnName="MSG_DEN" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="THUCPHAMs">
+      <EntityTypeMapping TypeName="Model.THUCPHAM">
+        <MappingFragment StoreEntitySet="THUCPHAM">
+          <ScalarProperty Name="MSTP" ColumnName="MSTP" />
+          <ScalarProperty Name="TEN" ColumnName="TEN" />
+          <ScalarProperty Name="MOTA" ColumnName="MOTA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TRANGTHAITGs">
+      <EntityTypeMapping TypeName="Model.TRANGTHAITG">
+        <MappingFragment StoreEntitySet="TRANGTHAITG">
+          <ScalarProperty Name="MSTTTG" ColumnName="MSTTTG" />
+          <ScalarProperty Name="TENTT" ColumnName="TENTT" />
+          <ScalarProperty Name="PHANTRAMTP" ColumnName="PHANTRAMTP" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GHENGOIs">
+      <EntityTypeMapping TypeName="Model.GHENGOI">
+        <MappingFragment StoreEntitySet="GHENGOI">
+          <ScalarProperty Name="MSG" ColumnName="MSG" />
+          <ScalarProperty Name="GHESO" ColumnName="GHESO" />
+          <ScalarProperty Name="LOAIGHE" ColumnName="LOAIGHE" />
+          <ScalarProperty Name="MSLMB" ColumnName="MSLMB" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="KHACHHANGTEs">
+      <EntityTypeMapping TypeName="Model.KHACHHANGTE">
+        <MappingFragment StoreEntitySet="KHACHHANGTE">
+          <ScalarProperty Name="MSKH" ColumnName="MSKH" />
+          <ScalarProperty Name="MSNGH" ColumnName="MSNGH" />
+          <ScalarProperty Name="THONGTINKSINH" ColumnName="THONGTINKSINH" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="CHUYENBAYTHUCPHAM" TypeName="Model.CHUYENBAYTHUCPHAM" StoreEntitySet="CHUYENBAYTHUCPHAM">
+      <EndProperty Name="CHUYENBAY">
+        <ScalarProperty Name="MSCB" ColumnName="MSCB" />
+      </EndProperty>
+      <EndProperty Name="THUCPHAM">
+        <ScalarProperty Name="MSTP" ColumnName="MSTP" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CHUYENMONBD" TypeName="Model.CHUYENMONBD" StoreEntitySet="CHUYENMONBD">
+      <EndProperty Name="LOAIMAYBAY">
+        <ScalarProperty Name="MSLMB" ColumnName="MSLMB" />
+      </EndProperty>
+      <EndProperty Name="NHANVIEN">
+        <ScalarProperty Name="MSNV" ColumnName="MSNV" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="KIEMTRA" TypeName="Model.KIEMTRA" StoreEntitySet="KIEMTRA">
+      <EndProperty Name="CHUYENBAY">
+        <ScalarProperty Name="MSCB" ColumnName="MSCB" />
+      </EndProperty>
+      <EndProperty Name="NHANVIEN">
+        <ScalarProperty Name="MSNV" ColumnName="MSNV" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="LAI" TypeName="Model.LAI" StoreEntitySet="LAI">
+      <EndProperty Name="LOAIMAYBAY">
+        <ScalarProperty Name="MSLMB" ColumnName="MSLMB" />
+      </EndProperty>
+      <EndProperty Name="NHANVIEN">
+        <ScalarProperty Name="MSNV" ColumnName="MSNV" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="VANHANH" TypeName="Model.VANHANH" StoreEntitySet="VANHANH">
+      <EndProperty Name="CHUYENBAY">
+        <ScalarProperty Name="MSCB" ColumnName="MSCB" />
+      </EndProperty>
+      <EndProperty Name="NHANVIEN">
+        <ScalarProperty Name="MSNV" ColumnName="MSNV" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>
