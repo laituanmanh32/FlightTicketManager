@@ -9,12 +9,12 @@ SaveAirPlane
 none
 false
 DEBUG;TRACE
-C:\Users\51202_000\Desktop\DBS Assignment 2\Assignment3\SaveAirPlane\SaveAirPlane\App.xaml
-11151548125
+C:\Users\51202_000\Desktop\DBS Assignment 2\Assignment3\SaveAirPlane\SaveAirPlane\View\App.xaml
+4119437643
 
-620155413
-17-1131486476
-MainWindow.xaml;
+15-1979201561
+181853259152
+View\DanhSachChuyenBay.xaml;View\DanhSachKhachHang.xaml;View\MainWindow.xaml;View\ThongTinKhachHang.xaml;
 
 False
 
